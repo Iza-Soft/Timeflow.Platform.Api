@@ -2,7 +2,23 @@ version: '3.4'
 
 services:
   timeflow.platform.api:
-    image: ${DOCKER_REGISTRY-}timeflowplatformapi
+    image: ${DOCKER_REGISTRY-}timeflow.platform.api
+    ports:
+        - 30001:443
     build:
-      context: .
-      dockerfile: Timeflow.Platform.Api/Dockerfile
+        context: .
+        dockerfile: Timeflow.Platform.Api/Dockerfile
+    depends_on: 
+        - db
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    user: root
+    hostname: sql_server
+    container_name: mssql-server-2019
+    ports:
+        - "1433:1433"
+    environment:
+        - ACCEPT_EULA=Y
+        - MSSQL_SA_PASSWORD=Password123!
+    volumes: 
+        - ./data:/var/opt/mssql/data 
