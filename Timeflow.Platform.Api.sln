@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timeflow.Platform.Api", "Ti
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D172BEE3-4143-494B-81EB-B3EF2CD1955B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeflow.Platform.DataAccess", "Timeflow.Platform.DataAccess\Timeflow.Platform.DataAccess.csproj", "{5A6C34C5-EA44-4A51-AF89-10E21EDF73D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeflow.Platform.Infrastructure", "Timeflow.Platform.Infrastructure\Timeflow.Platform.Infrastructure.csproj", "{8C6401F2-FC55-46CD-A2EA-CD3A68044315}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{D172BEE3-4143-494B-81EB-B3EF2CD1955B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D172BEE3-4143-494B-81EB-B3EF2CD1955B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D172BEE3-4143-494B-81EB-B3EF2CD1955B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A6C34C5-EA44-4A51-AF89-10E21EDF73D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A6C34C5-EA44-4A51-AF89-10E21EDF73D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A6C34C5-EA44-4A51-AF89-10E21EDF73D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A6C34C5-EA44-4A51-AF89-10E21EDF73D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C6401F2-FC55-46CD-A2EA-CD3A68044315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C6401F2-FC55-46CD-A2EA-CD3A68044315}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C6401F2-FC55-46CD-A2EA-CD3A68044315}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C6401F2-FC55-46CD-A2EA-CD3A68044315}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
