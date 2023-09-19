@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using Timeflow.Platform.DataAccess.Authentication;
+using Timeflow.Platform.Infrastructure.Authentication;
 
-namespace Timeflow.Platform.DataAccess.Mappings
+namespace Timeflow.Platform.Infrastructure.Mappings
 {
     public static class ApplicationUserMapping
     {

@@ -1,11 +1,23 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Timeflow.Platform.Infrastructure.Extensions.Service;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
+
+#region Add services to the container
+
+builder.Services.AddDdManagement(configuration);
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
+
+#endregion
 
 var app = builder.Build();
 

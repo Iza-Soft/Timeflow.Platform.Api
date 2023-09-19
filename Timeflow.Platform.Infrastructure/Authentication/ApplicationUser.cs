@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Timeflow.Platform.DataAccess.Authentication
+namespace Timeflow.Platform.Infrastructure.Authentication
 {
     public class ApplicationUser : IdentityUser<Guid>
     {

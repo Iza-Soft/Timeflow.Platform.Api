@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Timeflow.Platform.DataAccess.Entities;
+using Timeflow.Platform.Infrastructure.Entities;
 
-namespace Timeflow.Platform.DataAccess.Mappings
+namespace Timeflow.Platform.Infrastructure.Mappings
 {
     public static class CompanyMapping
     {

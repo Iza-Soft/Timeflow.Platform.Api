@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Timeflow.Platform.DataAccess.Entities
+namespace Timeflow.Platform.Infrastructure.Entities
 {
     public abstract class BaseEntity<TKey> where TKey : IEquatable<TKey>
     {

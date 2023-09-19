@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Timeflow.Platform.DataAccess.Authentication;
-using Timeflow.Platform.DataAccess.Entities;
-using Timeflow.Platform.DataAccess.Mappings;
+using Timeflow.Platform.Infrastructure.Authentication;
+using Timeflow.Platform.Infrastructure.Entities;
+using Timeflow.Platform.Infrastructure.Mappings;
 //using Service.History.DataAccess.Authentication;
 //using Service.History.DataAccess.Entities;
 //using Service.History.DataAccess.Mappings;
 
-namespace Timeflow.Platform.DataAccess
+namespace Timeflow.Platform.Infrastructure
 {
     /*https://stackoverflow.com/questions/24079133/what-is-the-difference-between-dbset-and-virtual-dbset*/
     public class TimeFlowContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>

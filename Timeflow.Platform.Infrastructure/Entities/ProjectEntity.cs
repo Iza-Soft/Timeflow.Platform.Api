@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Timeflow.Platform.DataAccess.Entities
+namespace Timeflow.Platform.Infrastructure.Entities
 {
-    public class CompanyEntity : BaseEntity<int>
+    public class ProjectEntity : BaseEntity<int>
     {
     }
 }

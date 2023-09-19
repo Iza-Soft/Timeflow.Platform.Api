@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Timeflow.Platform.DataAccess.Authentication;
+using Timeflow.Platform.Infrastructure.Authentication;
 
-namespace Timeflow.Platform.DataAccess.Extensions.Service
+namespace Timeflow.Platform.Infrastructure.Extensions.Service
 {
     [ExcludeFromCodeCoverage]
     public static class ServiceCollectionExtensions

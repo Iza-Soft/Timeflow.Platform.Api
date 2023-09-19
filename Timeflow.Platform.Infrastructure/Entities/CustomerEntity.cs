@@ -1,4 +1,4 @@
-﻿namespace Timeflow.Platform.DataAccess.Entities
+﻿namespace Timeflow.Platform.Infrastructure.Entities
 {
     public class CustomerEntity : BaseEntity<int>
     {
