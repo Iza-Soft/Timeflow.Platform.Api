@@ -16,7 +16,7 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
       - name: Install dependecies
-        run: dotnet restore
+        run: dotnet restore Timeflow.Platform.Api/Timeflow.Platform.Api.sln
       - name: Test with dotnet
         run: dotnet test --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
       - name: Upload dotnet test results
