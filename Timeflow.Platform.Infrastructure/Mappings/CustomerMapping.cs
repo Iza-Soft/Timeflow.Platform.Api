@@ -14,6 +14,7 @@ namespace Timeflow.Platform.Infrastructure.Mappings
         public static void Configure(this EntityTypeBuilder<CustomerEntity> modelBuilder)
         {
             //modelBuilder.HasMany(x => x.Cars).WithOne(y => y.User).HasForeignKey(z => z.UserId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Property(x => x.CreatedDate).HasDefaultValue(DateTime.Now);
             modelBuilder.ToTable("Customers");
         }
     }

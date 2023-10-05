@@ -15,7 +15,11 @@ namespace Timeflow.Platform.Infrastructure
     {
         public TimeFlowContext(DbContextOptions<TimeFlowContext> options) : base(options) { }
 
+        public virtual DbSet<ContractorEntity> Contractors { get; set; } = null!;
+
         public virtual DbSet<CompanyEntity> Companies { get; set; } = null!;
+
+        public virtual DbSet<PersonEntity> Persons { get; set; } = null!;
 
         public virtual DbSet<CustomerEntity> Customers { get; set; } = null!;
 
@@ -24,7 +28,9 @@ namespace Timeflow.Platform.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ApplicationUser>().Configure();
+            modelBuilder.Entity<ContractorEntity>().Configure();
             modelBuilder.Entity<CompanyEntity>().Configure();
+            modelBuilder.Entity<PersonEntity>().Configure();
             modelBuilder.Entity<CustomerEntity>().Configure();
             modelBuilder.Entity<ProjectEntity>().Configure();
 

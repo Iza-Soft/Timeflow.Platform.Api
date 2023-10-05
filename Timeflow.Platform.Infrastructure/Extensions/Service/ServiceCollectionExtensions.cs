@@ -20,8 +20,8 @@ namespace Timeflow.Platform.Infrastructure.Extensions.Service
              *      3. Run command in Developer Command Prompt or Developer PowerShell: dotnet tool install --global dotnet-ef 
              *      4. Install the latest Microsoft.EntityFrameworkCore.Design package.
              *************************************************************************************************************************************************************************************************************************************************
-             * dotnet ef migrations add InitializeDataBase --startup-project Service.History.Web --project Service.History.DataAccess
-             * dotnet ef database update --startup-project Service.History.Web --project Service.History.DataAccess
+             * dotnet ef migrations add InitializeDataBase --startup-project Timeflow.Platform.Api --project Timeflow.Platform.Infrastructure
+             * dotnet ef database update --startup-project Timeflow.Platform.Api --project Timeflow.Platform.Infrastructure
              * 
              * see link: https://www.entityframeworktutorial.net/efcore/cli-commands-for-ef-core-migration.aspx
              * 

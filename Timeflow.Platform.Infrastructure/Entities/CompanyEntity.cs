@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Timeflow.Platform.Infrastructure.Entities
 {
-    public class CompanyEntity : BaseEntity<int>
+    public class CompanyEntity : ContractorEntity
     {
+        public virtual ICollection<PersonEntity> Persons { get; set; } = null!;
     }
 }
