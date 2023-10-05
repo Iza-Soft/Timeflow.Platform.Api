@@ -15,7 +15,7 @@ namespace Timeflow.Platform.Infrastructure.Mappings
         {
             //modelBuilder.HasMany(x => x.Cars).WithOne(y => y.User).HasForeignKey(z => z.UserId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Property(x => x.CreatedDate).HasDefaultValue(DateTime.Now);
-            modelBuilder.ToTable("Customers");
+            modelBuilder.ToTable("Customer");
         }
     }
 }
