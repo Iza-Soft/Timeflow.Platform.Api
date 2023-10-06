@@ -21,12 +21,15 @@ namespace Timeflow.Platform.Infrastructure
 
         public virtual DbSet<PersonEntity> Persons { get; set; } = null!;
 
+        public virtual DbSet<TimesheetEntity> Timesheets { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ApplicationUser>().Configure();
             modelBuilder.Entity<ContractorEntity>().Configure();
             modelBuilder.Entity<CompanyEntity>().Configure();
             modelBuilder.Entity<PersonEntity>().Configure();
+            modelBuilder.Entity<TimesheetEntity>().Configure();
 
             base.OnModelCreating(modelBuilder);
         }
