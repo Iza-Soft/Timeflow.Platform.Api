@@ -8,6 +8,7 @@ namespace Timeflow.Platform.Infrastructure.Mappings
     {
         public static void Configure(this EntityTypeBuilder<HourlyRateEntity> modelBuilder)
         {
+            modelBuilder.HasKey(x => new { x.ProjectId, x.ContractorId });
             modelBuilder.Property(x => x.CreatedDate).HasDefaultValue(DateTime.Now);
             modelBuilder.ToTable("HourlyRate");
         }
