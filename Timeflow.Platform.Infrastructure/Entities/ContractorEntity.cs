@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Timeflow.Platform.Infrastructure.Entities
+﻿namespace Timeflow.Platform.Infrastructure.Entities
 {
     public abstract class ContractorEntity : BaseEntity<int>
     {
@@ -21,5 +15,7 @@ namespace Timeflow.Platform.Infrastructure.Entities
         public string Phone { get; set; } = null!;
 
         public string Email { get; set; } = null!;
+
+        public virtual ICollection<TimesheetEntity> Timesheets { get; set; } = null!;
     }
 }
