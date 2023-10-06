@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Timeflow.Platform.Infrastructure.Migrations
 {
-    public partial class InitializeDB : Migration
+    public partial class CreateContractorTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,7 +51,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Contractors",
+                name: "Contractor",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -65,37 +65,16 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 10, 4, 14, 29, 25, 622, DateTimeKind.Local).AddTicks(2340))
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 10, 6, 14, 24, 34, 247, DateTimeKind.Local).AddTicks(6757))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contractors", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Customers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 10, 4, 14, 29, 25, 622, DateTimeKind.Local).AddTicks(3027))
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Projects",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 10, 4, 14, 29, 25, 622, DateTimeKind.Local).AddTicks(3335))
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.PrimaryKey("PK_Contractor", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Contractor_Contractor_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Contractor",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -242,6 +221,11 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contractor_CompanyId",
+                table: "Contractor",
+                column: "CompanyId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -262,13 +246,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Contractors");
-
-            migrationBuilder.DropTable(
-                name: "Customers");
-
-            migrationBuilder.DropTable(
-                name: "Projects");
+                name: "Contractor");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

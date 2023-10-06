@@ -12,8 +12,8 @@ using Timeflow.Platform.Infrastructure;
 namespace Timeflow.Platform.Infrastructure.Migrations
 {
     [DbContext(typeof(TimeFlowContext))]
-    [Migration("20231004113011_AddFKOneCompanyToManyPerson")]
-    partial class AddFKOneCompanyToManyPerson
+    [Migration("20231006112434_CreateContractorTable")]
+    partial class CreateContractorTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -252,7 +252,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 4, 14, 30, 11, 122, DateTimeKind.Local).AddTicks(5713));
+                        .HasDefaultValue(new DateTime(2023, 10, 6, 14, 24, 34, 247, DateTimeKind.Local).AddTicks(6757));
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -276,45 +276,9 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contractors", (string)null);
+                    b.ToTable("Contractor", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("ContractorEntity");
-                });
-
-            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.CustomerEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 4, 14, 30, 11, 122, DateTimeKind.Local).AddTicks(7060));
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Customers", (string)null);
-                });
-
-            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 4, 14, 30, 11, 122, DateTimeKind.Local).AddTicks(7328));
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Projects", (string)null);
                 });
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.CompanyEntity", b =>
