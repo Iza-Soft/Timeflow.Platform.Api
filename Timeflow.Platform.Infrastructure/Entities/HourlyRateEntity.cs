@@ -9,5 +9,7 @@
         public decimal Rate { get; set; }
 
         public int CurrencyId { get; set; }
+
+        public virtual CurrencyEntity Currency { get; set; } = null!;
     }
 }
