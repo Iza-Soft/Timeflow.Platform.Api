@@ -7,7 +7,9 @@
         public string Title { get; set; } = null!;
 
         public string Description { get; set; } = null!;
-        
+
+        public virtual CustomerEntity Customer { get; set; } = null!;
+
         public virtual ICollection<TimesheetEntity> Timesheets { get; set; } = null!;
     }
 }

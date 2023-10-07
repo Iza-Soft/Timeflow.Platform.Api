@@ -25,6 +25,8 @@ namespace Timeflow.Platform.Infrastructure
 
         public virtual DbSet<ProjectEntity> Projects { get; set; } = null!;
 
+        public virtual DbSet<CustomerEntity> Customers { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ApplicationUser>().Configure();
@@ -33,6 +35,7 @@ namespace Timeflow.Platform.Infrastructure
             modelBuilder.Entity<PersonEntity>().Configure();
             modelBuilder.Entity<TimesheetEntity>().Configure();
             modelBuilder.Entity<ProjectEntity>().Configure();
+            modelBuilder.Entity<CustomerEntity>().Configure();
 
             base.OnModelCreating(modelBuilder);
         }
