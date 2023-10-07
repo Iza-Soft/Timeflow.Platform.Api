@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Timeflow.Platform.Infrastructure;
 
@@ -11,9 +12,10 @@ using Timeflow.Platform.Infrastructure;
 namespace Timeflow.Platform.Infrastructure.Migrations
 {
     [DbContext(typeof(TimeFlowContext))]
-    partial class TimeFlowContextModelSnapshot : ModelSnapshot
+    [Migration("20231006132952_CreateProjectTable")]
+    partial class CreateProjectTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,7 +252,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 7, 21, 29, 52, 148, DateTimeKind.Local).AddTicks(5779));
+                        .HasDefaultValue(new DateTime(2023, 10, 6, 16, 29, 52, 504, DateTimeKind.Local).AddTicks(4082));
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -287,10 +289,13 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("ContractorId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 7, 21, 29, 52, 148, DateTimeKind.Local).AddTicks(9261));
+                        .HasDefaultValue(new DateTime(2023, 10, 6, 16, 29, 52, 504, DateTimeKind.Local).AddTicks(6681));
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -316,13 +321,10 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ContractorId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 7, 21, 29, 52, 148, DateTimeKind.Local).AddTicks(8871));
+                        .HasDefaultValue(new DateTime(2023, 10, 6, 16, 29, 52, 504, DateTimeKind.Local).AddTicks(6400));
 
                     b.Property<int>("DayOfMonth")
                         .HasColumnType("int");
@@ -348,8 +350,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ContractorId");
 
                     b.HasIndex("ProjectId");
 
@@ -429,19 +429,11 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.TimesheetEntity", b =>
                 {
-                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.ContractorEntity", "Contractor")
-                        .WithMany("Timesheets")
-                        .HasForeignKey("ContractorId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
                     b.HasOne("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", "Project")
                         .WithMany("Timesheets")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
-
-                    b.Navigation("Contractor");
 
                     b.Navigation("Project");
                 });
@@ -455,11 +447,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ContractorEntity", b =>
-                {
-                    b.Navigation("Timesheets");
                 });
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", b =>

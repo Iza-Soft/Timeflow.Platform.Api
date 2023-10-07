@@ -23,6 +23,8 @@ namespace Timeflow.Platform.Infrastructure
 
         public virtual DbSet<TimesheetEntity> Timesheets { get; set; } = null!;
 
+        public virtual DbSet<ProjectEntity> Projects { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ApplicationUser>().Configure();
@@ -30,6 +32,7 @@ namespace Timeflow.Platform.Infrastructure
             modelBuilder.Entity<CompanyEntity>().Configure();
             modelBuilder.Entity<PersonEntity>().Configure();
             modelBuilder.Entity<TimesheetEntity>().Configure();
+            modelBuilder.Entity<ProjectEntity>().Configure();
 
             base.OnModelCreating(modelBuilder);
         }
