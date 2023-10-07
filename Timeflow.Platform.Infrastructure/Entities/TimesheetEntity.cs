@@ -2,6 +2,8 @@
 {
     public class TimesheetEntity : BaseEntity<int>
     {
+        public int ProjectId { get; set; }
+
         public int ContractorId { get; set; }
 
         public int DayOfMonth { get; set; }
@@ -15,6 +17,8 @@
         public string Month { get; set; } = null!;
 
         public double WorkingHours { get; set; }
+
+        public virtual ProjectEntity Project { get; set; } = null!;
 
         public virtual ContractorEntity Contractor { get; set; } = null!;
 
