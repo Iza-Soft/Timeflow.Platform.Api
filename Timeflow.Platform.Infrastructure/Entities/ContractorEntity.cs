@@ -16,6 +16,8 @@
 
         public string Email { get; set; } = null!;
 
-        public virtual ICollection<TimesheetEntity> Timesheets { get; set; } = null!;
+        public virtual ICollection<TimeSheetEntity> Timesheets { get; set; } = null!;
+
+        public virtual ICollection<HourlyRateEntity> HourlyRates { get; set; } = null!;
     }
 }

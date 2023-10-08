@@ -1,6 +1,6 @@
 ﻿namespace Timeflow.Platform.Infrastructure.Entities
 {
-    public class TimesheetEntity : BaseEntity<int>
+    public class TimeSheetEntity : BaseEntity<int>
     {
         public int ProjectId { get; set; }
 
