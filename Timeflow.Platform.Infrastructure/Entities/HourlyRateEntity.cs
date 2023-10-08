@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Timeflow.Platform.Infrastructure.Entities
+﻿namespace Timeflow.Platform.Infrastructure.Entities
 {
     public class HourlyRateEntity : BaseEntity<int>
     {
@@ -17,5 +11,9 @@ namespace Timeflow.Platform.Infrastructure.Entities
         public int CurrencyId { get; set; }
 
         public virtual CurrencyEntity Currency { get; set; } = null!;
+
+        public virtual ContractorEntity Contractor { get; set; } = null!;
+
+        public virtual ProjectEntity Project { get; set; } = null!;
     }
 }
