@@ -1,0 +1,1 @@
+https://medium.com/@samueleresca/developing-token-authentication-using-asp-net-core-c3fbd7bfd7cb

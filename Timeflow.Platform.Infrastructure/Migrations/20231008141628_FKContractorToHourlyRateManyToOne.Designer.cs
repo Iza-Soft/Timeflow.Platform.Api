@@ -12,8 +12,8 @@ using Timeflow.Platform.Infrastructure;
 namespace Timeflow.Platform.Infrastructure.Migrations
 {
     [DbContext(typeof(TimeFlowContext))]
-    [Migration("20231004113011_AddFKOneCompanyToManyPerson")]
-    partial class AddFKOneCompanyToManyPerson
+    [Migration("20231008141628_FKContractorToHourlyRateManyToOne")]
+    partial class FKContractorToHourlyRateManyToOne
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -252,7 +252,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 4, 14, 30, 11, 122, DateTimeKind.Local).AddTicks(5713));
+                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 16, 28, 19, DateTimeKind.Local).AddTicks(1197));
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -276,9 +276,35 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contractors", (string)null);
+                    b.ToTable("Contractor", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("ContractorEntity");
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.CurrencyEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Abbreviation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 16, 28, 19, DateTimeKind.Local).AddTicks(6955));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Currency", (string)null);
                 });
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.CustomerEntity", b =>
@@ -289,14 +315,68 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 4, 14, 30, 11, 122, DateTimeKind.Local).AddTicks(7060));
+                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 16, 28, 19, DateTimeKind.Local).AddTicks(6700));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Postcode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customer", (string)null);
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.HourlyRateEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ContractId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 16, 28, 20, DateTimeKind.Local).AddTicks(504));
+
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContractId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.ToTable("HourlyRate", (string)null);
                 });
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", b =>
@@ -310,11 +390,72 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 4, 14, 30, 11, 122, DateTimeKind.Local).AddTicks(7328));
+                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 16, 28, 19, DateTimeKind.Local).AddTicks(6270));
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projects", (string)null);
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Project", (string)null);
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.TimeSheetEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ContractorId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 16, 28, 19, DateTimeKind.Local).AddTicks(5027));
+
+                    b.Property<int>("DayOfMonth")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DayOfWeek")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Month")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MonthOfYear")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("WorkingHours")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContractorId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("TimeSheet", (string)null);
                 });
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.CompanyEntity", b =>
@@ -388,6 +529,55 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.HourlyRateEntity", b =>
+                {
+                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.ContractorEntity", "Contractor")
+                        .WithMany("HourlyRates")
+                        .HasForeignKey("ContractId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.CurrencyEntity", "Currency")
+                        .WithMany("HourlyRates")
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Contractor");
+
+                    b.Navigation("Currency");
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", b =>
+                {
+                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.CustomerEntity", "Customer")
+                        .WithMany("Projects")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.TimeSheetEntity", b =>
+                {
+                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.ContractorEntity", "Contractor")
+                        .WithMany("Timesheets")
+                        .HasForeignKey("ContractorId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", "Project")
+                        .WithMany("Timesheets")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Contractor");
+
+                    b.Navigation("Project");
+                });
+
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.PersonEntity", b =>
                 {
                     b.HasOne("Timeflow.Platform.Infrastructure.Entities.CompanyEntity", "Company")
@@ -397,6 +587,28 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ContractorEntity", b =>
+                {
+                    b.Navigation("HourlyRates");
+
+                    b.Navigation("Timesheets");
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.CurrencyEntity", b =>
+                {
+                    b.Navigation("HourlyRates");
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.CustomerEntity", b =>
+                {
+                    b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", b =>
+                {
+                    b.Navigation("Timesheets");
                 });
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.CompanyEntity", b =>

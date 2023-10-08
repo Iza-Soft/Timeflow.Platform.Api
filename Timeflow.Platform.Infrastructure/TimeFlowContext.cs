@@ -21,9 +21,15 @@ namespace Timeflow.Platform.Infrastructure
 
         public virtual DbSet<PersonEntity> Persons { get; set; } = null!;
 
-        public virtual DbSet<CustomerEntity> Customers { get; set; } = null!;
+        public virtual DbSet<TimeSheetEntity> Timesheets { get; set; } = null!;
 
         public virtual DbSet<ProjectEntity> Projects { get; set; } = null!;
+
+        public virtual DbSet<CustomerEntity> Customers { get; set; } = null!;
+
+        public virtual DbSet<CurrencyEntity> Currencies { get; set; } = null!;
+
+        public virtual DbSet<HourlyRateEntity> Hourlyrates { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,8 +37,11 @@ namespace Timeflow.Platform.Infrastructure
             modelBuilder.Entity<ContractorEntity>().Configure();
             modelBuilder.Entity<CompanyEntity>().Configure();
             modelBuilder.Entity<PersonEntity>().Configure();
-            modelBuilder.Entity<CustomerEntity>().Configure();
+            modelBuilder.Entity<TimeSheetEntity>().Configure();
             modelBuilder.Entity<ProjectEntity>().Configure();
+            modelBuilder.Entity<CustomerEntity>().Configure();
+            modelBuilder.Entity<CurrencyEntity>().Configure();
+            modelBuilder.Entity<HourlyRateEntity>().Configure();
 
             base.OnModelCreating(modelBuilder);
         }

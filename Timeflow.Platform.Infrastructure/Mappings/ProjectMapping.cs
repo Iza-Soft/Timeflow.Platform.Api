@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Timeflow.Platform.Infrastructure.Entities;
 
 namespace Timeflow.Platform.Infrastructure.Mappings
@@ -13,9 +8,9 @@ namespace Timeflow.Platform.Infrastructure.Mappings
     {
         public static void Configure(this EntityTypeBuilder<ProjectEntity> modelBuilder)
         {
-            //modelBuilder.HasMany(x => x.Cars).WithOne(y => y.User).HasForeignKey(z => z.UserId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.HasOne(x => x.Customer).WithMany(y => y.Projects).HasForeignKey(x => x.CustomerId).OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Property(x => x.CreatedDate).HasDefaultValue(DateTime.Now);
-            modelBuilder.ToTable("Projects");
+            modelBuilder.ToTable("Project");
         }
     }
 }

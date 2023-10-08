@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Timeflow.Platform.Infrastructure;
 
@@ -11,9 +12,10 @@ using Timeflow.Platform.Infrastructure;
 namespace Timeflow.Platform.Infrastructure.Migrations
 {
     [DbContext(typeof(TimeFlowContext))]
-    partial class TimeFlowContextModelSnapshot : ModelSnapshot
+    [Migration("20231008141013_FKCurrencyToHourlyRateManyToOne")]
+    partial class FKCurrencyToHourlyRateManyToOne
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,7 +252,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 22, 9, 315, DateTimeKind.Local).AddTicks(1928));
+                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 10, 13, 505, DateTimeKind.Local).AddTicks(7125));
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -294,7 +296,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 22, 9, 315, DateTimeKind.Local).AddTicks(6287));
+                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 10, 13, 506, DateTimeKind.Local).AddTicks(1776));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -328,7 +330,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 22, 9, 315, DateTimeKind.Local).AddTicks(6050));
+                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 10, 13, 506, DateTimeKind.Local).AddTicks(1581));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -357,7 +359,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 22, 9, 315, DateTimeKind.Local).AddTicks(9534));
+                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 10, 13, 506, DateTimeKind.Local).AddTicks(2851));
 
                     b.Property<int>("CurrencyId")
                         .HasColumnType("int");
@@ -370,11 +372,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContractId");
-
                     b.HasIndex("CurrencyId");
-
-                    b.HasIndex("ProjectId");
 
                     b.ToTable("HourlyRate", (string)null);
                 });
@@ -390,7 +388,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 22, 9, 315, DateTimeKind.Local).AddTicks(5786));
+                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 10, 13, 506, DateTimeKind.Local).AddTicks(1290));
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -424,7 +422,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 22, 9, 315, DateTimeKind.Local).AddTicks(4809));
+                        .HasDefaultValue(new DateTime(2023, 10, 8, 17, 10, 13, 506, DateTimeKind.Local).AddTicks(258));
 
                     b.Property<int>("DayOfMonth")
                         .HasColumnType("int");
@@ -531,29 +529,13 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.HourlyRateEntity", b =>
                 {
-                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.ContractorEntity", "Contractor")
-                        .WithMany("HourlyRates")
-                        .HasForeignKey("ContractId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
                     b.HasOne("Timeflow.Platform.Infrastructure.Entities.CurrencyEntity", "Currency")
                         .WithMany("HourlyRates")
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", "Project")
-                        .WithMany("HourlyRates")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("Contractor");
-
                     b.Navigation("Currency");
-
-                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", b =>
@@ -599,8 +581,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ContractorEntity", b =>
                 {
-                    b.Navigation("HourlyRates");
-
                     b.Navigation("Timesheets");
                 });
 
@@ -616,8 +596,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", b =>
                 {
-                    b.Navigation("HourlyRates");
-
                     b.Navigation("Timesheets");
                 });
 
