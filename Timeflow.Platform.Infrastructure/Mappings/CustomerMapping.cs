@@ -1,16 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Timeflow.Platform.Infrastructure.Entities;
+﻿//using Microsoft.EntityFrameworkCore;
+//using Microsoft.EntityFrameworkCore.Metadata.Builders;
+//using Timeflow.Platform.Infrastructure.Entities;
 
 
-namespace Timeflow.Platform.Infrastructure.Mappings
-{
-    public static class CustomerMapping
-    {
-        public static void Configure(this EntityTypeBuilder<CustomerEntity> modelBuilder)
-        {
-            modelBuilder.Property(x => x.CreatedDate).HasDefaultValue(DateTime.Now);
-            modelBuilder.ToTable("Customer");
-        }
-    }
-}
+//namespace Timeflow.Platform.Infrastructure.Mappings
+//{
+//    public static class CustomerMapping
+//    {
+//        public static void Configure(this EntityTypeBuilder<CustomerEntity> modelBuilder)
+//        {
+//            modelBuilder.Property(x => x.CreatedDate).HasDefaultValue(DateTime.Now);
+//            modelBuilder.ToTable("Customer");
+//        }
+//    }
+//}
