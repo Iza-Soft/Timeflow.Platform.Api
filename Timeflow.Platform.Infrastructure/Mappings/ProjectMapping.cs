@@ -8,7 +8,7 @@ namespace Timeflow.Platform.Infrastructure.Mappings
     {
         public static void Configure(this EntityTypeBuilder<ProjectEntity> modelBuilder)
         {
-            modelBuilder.HasOne(x => x.Customer).WithMany(y => y.Projects).HasForeignKey(x => x.CustomerId).OnDelete(DeleteBehavior.ClientCascade);
+            //modelBuilder.HasOne(x => x.Customer).WithMany(y => y.Projects).HasForeignKey(x => x.CustomerId).OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Property(x => x.CreatedDate).HasDefaultValue(DateTime.Now);
             modelBuilder.ToTable("Project");
         }

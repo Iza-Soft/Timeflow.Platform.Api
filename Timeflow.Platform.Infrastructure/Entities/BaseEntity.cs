@@ -10,5 +10,7 @@ namespace Timeflow.Platform.Infrastructure.Entities
         public virtual TKey Id { get; set; }
 
         public DateTime CreatedDate { get; set; }
+
+        public Guid CreatedBy { get; set; }
     }
 }

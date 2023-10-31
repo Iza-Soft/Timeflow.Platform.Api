@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Timeflow.Platform.Infrastructure.Migrations
 {
-    public partial class CreateContractorTable : Migration
+    public partial class InitializeDataBase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,33 +48,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Contractor",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Postcode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CompanyId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 10, 6, 14, 24, 34, 247, DateTimeKind.Local).AddTicks(6757))
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Contractor", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Contractor_Contractor_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Contractor",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -221,11 +194,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Contractor_CompanyId",
-                table: "Contractor",
-                column: "CompanyId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -244,9 +212,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "Contractor");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
