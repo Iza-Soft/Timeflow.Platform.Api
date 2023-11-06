@@ -20,9 +20,9 @@ namespace Timeflow.Platform.Middleware.Patterns.Proxy.Class
             this._projectApiGateway = new ProjectApiGateway(provider);
         }
 
-        public async Task<IList<ProjectDto>> GetByUserIdAsync() 
+        public async Task<IList<ProjectDto>> GetByUserIdAsync(Guid userId) 
         {
-            return await this._projectApiGateway.GetByUserIdAsync();
+            return await this._projectApiGateway.GetByUserIdAsync(userId);
         }
     }
 }

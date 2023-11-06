@@ -1,27 +1,27 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Timeflow.Platform.Infrastructure.Patterns.Repository.Interface;
+using Timeflow.Platform.Infrastructure.Patterns.Repository.Class;
 using Timeflow.Platform.Middleware.Dto;
 using Timeflow.Platform.Middleware.Patterns.Proxy.Interface;
+using Timeflow.Platform.Middleware.Extensions.Factories;
 
 namespace Timeflow.Platform.Middleware.Gateways
 {
     internal class ProjectApiGateway : IProjectProxy
     {
+        private readonly IProjectRepository _projectRepository;
+
         public ProjectApiGateway(IServiceProvider provider)
         {
             using (IServiceScope scope = provider.CreateScope())
             {
-                //this._externalAuthProvider = scope.ServiceProvider.GetRequiredService<ExternalAuthProvider>();
+                this._projectRepository = scope.ServiceProvider.GetRequiredService<ProjectRepository>();
             }
         }
 
-        public async Task<IList<ProjectDto>> GetByUserIdAsync()
+        public async Task<IList<ProjectDto>> GetByUserIdAsync(Guid userId)
         {
-            return await Task.Run(() => new List<ProjectDto>() { new ProjectDto() });
+            return (await this._projectRepository.GetAllProjectAsync(userId)).ToDto();
         }
     }
 }

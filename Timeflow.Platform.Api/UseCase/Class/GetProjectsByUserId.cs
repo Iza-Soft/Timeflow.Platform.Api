@@ -3,6 +3,7 @@ using Timeflow.Platform.Api.Boundary.Response;
 using Timeflow.Platform.Api.UseCase.Abstract;
 using Timeflow.Platform.Middleware.Patterns.Proxy.Interface;
 using Timeflow.Platform.Api.Extensions.Factories;
+using Timeflow.Platform.Api.Boundary.Request.Class;
 
 namespace Timeflow.Platform.Api.UseCase.Class
 {
@@ -17,8 +18,9 @@ namespace Timeflow.Platform.Api.UseCase.Class
 
         public override async Task<IList<ProjectResponseViewModel>> ExecuteAsync(RequestViewModel? request)
         {
-            //BaseRequest request = requestt as BaseRequest;
-            return (await this._projectProxy.GetByUserIdAsync()).ToResponse();
+            Guid userId = (request as ProjectRequestViewModel)!.UserId;
+
+            return (await this._projectProxy.GetByUserIdAsync(userId)).ToResponse();
         }
     }
 }

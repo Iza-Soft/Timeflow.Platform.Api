@@ -12,6 +12,8 @@ using Timeflow.Platform.Api.Swagger;
 using Timeflow.Platform.Api.UseCase.Class;
 using Timeflow.Platform.Api.UseCase.Interface;
 using Timeflow.Platform.Infrastructure.Extensions.Service;
+using Timeflow.Platform.Infrastructure.Patterns.Repository.Class;
+using Timeflow.Platform.Infrastructure.Patterns.Repository.Interface;
 using Timeflow.Platform.Middleware.Patterns.Proxy.Class;
 using Timeflow.Platform.Middleware.Patterns.Proxy.Interface;
 
@@ -29,6 +31,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IBaseUseCase<IList<ProjectResponseViewModel>>, GetProjectsByUserId>();
 builder.Services.AddScoped<IProjectProxy, ProjectProxy>();
 
