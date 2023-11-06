@@ -11,6 +11,6 @@ namespace Timeflow.Platform.Infrastructure.Patterns.Repository.Class
         {
         }
 
-        public async Task<IEnumerable<ProjectEntity>> GetAll() => await base.GetAllAsync();
+        public async Task<IEnumerable<ProjectEntity>> GetAllProjectAsync() => await base.GetAllAsync();
     }
 }
