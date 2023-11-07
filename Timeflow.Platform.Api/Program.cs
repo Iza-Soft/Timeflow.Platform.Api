@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +10,9 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using Timeflow.Platform.Api.Boundary.Response;
+using Timeflow.Platform.Api.Extensions.Factories;
+using Timeflow.Platform.Api.Extensions.Service;
+using Timeflow.Platform.Api.Mappings;
 using Timeflow.Platform.Api.Swagger;
 using Timeflow.Platform.Api.UseCase.Class;
 using Timeflow.Platform.Api.UseCase.Interface;
@@ -16,6 +20,7 @@ using Timeflow.Platform.Infrastructure;
 using Timeflow.Platform.Infrastructure.Extensions.Service;
 using Timeflow.Platform.Infrastructure.Patterns.Repository.Class;
 using Timeflow.Platform.Infrastructure.Patterns.Repository.Interface;
+using Timeflow.Platform.Middleware.Extensions.Service;
 using Timeflow.Platform.Middleware.Patterns.Proxy.Class;
 using Timeflow.Platform.Middleware.Patterns.Proxy.Interface;
 
@@ -70,9 +75,15 @@ builder.Services.AddApiVersioning(o =>
     options.SubstituteApiVersionInUrl = true;
 }).AddMvc();
 
+builder.Services.AddAutoMapperProfiles();
+builder.Services.AddMiddlewareAutoMapperProfiles();
+
 #endregion
 
 var app = builder.Build();
+
+app.UseFactory();
+app.UseMiddlewareFactory();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
