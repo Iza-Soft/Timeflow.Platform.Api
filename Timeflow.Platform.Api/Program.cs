@@ -2,6 +2,7 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
@@ -11,6 +12,7 @@ using Timeflow.Platform.Api.Boundary.Response;
 using Timeflow.Platform.Api.Swagger;
 using Timeflow.Platform.Api.UseCase.Class;
 using Timeflow.Platform.Api.UseCase.Interface;
+using Timeflow.Platform.Infrastructure;
 using Timeflow.Platform.Infrastructure.Extensions.Service;
 using Timeflow.Platform.Infrastructure.Patterns.Repository.Class;
 using Timeflow.Platform.Infrastructure.Patterns.Repository.Interface;
@@ -30,9 +32,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+builder.Services.AddTransient<DbContext, TimeFlowContext>();
 builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
+
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
 builder.Services.AddScoped<IBaseUseCase<IList<ProjectResponseViewModel>>, GetProjectsByUserId>();
+
 builder.Services.AddScoped<IProjectProxy, ProjectProxy>();
 
 builder.Services.AddSwaggerGen(options =>

@@ -16,6 +16,8 @@ namespace Timeflow.Platform.Infrastructure.Entities
 
         //public virtual ICollection<HourlyRateEntity> HourlyRates { get; set; } = null!;
 
+        public Guid UserId { get; set; }
+
         public string Title { get; set; } = null!;
 
         public string? Description { get; set; }

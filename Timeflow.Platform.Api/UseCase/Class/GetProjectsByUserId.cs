@@ -20,7 +20,9 @@ namespace Timeflow.Platform.Api.UseCase.Class
         {
             Guid userId = (request as ProjectRequestViewModel)!.UserId;
 
-            return (await this._projectProxy.GetByUserIdAsync(userId)).ToResponse();
+            var projects = await this._projectProxy.GetByUserIdAsync(userId);
+
+            return projects.ToResult();
         }
     }
 }

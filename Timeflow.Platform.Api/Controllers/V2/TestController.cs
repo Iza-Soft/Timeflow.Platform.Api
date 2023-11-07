@@ -18,7 +18,7 @@ namespace Timeflow.Platform.Api.Controllers.V2
         //public async Task<IActionResult> GetAll([FromBody] ProjectRequest project)
         public async Task<string> GetAllProjects()
         {
-            return "Test method call successful";
+            return await Task.Run(() => "Test method call successful");
 
         }
     }

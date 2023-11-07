@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Timeflow.Platform.Infrastructure.Entities;
 using Timeflow.Platform.Infrastructure.Patterns.Repository.Abstract;
 using Timeflow.Platform.Infrastructure.Patterns.Repository.Interface;
@@ -13,6 +12,6 @@ namespace Timeflow.Platform.Infrastructure.Patterns.Repository.Class
         {
         }
 
-        public async Task<IEnumerable<ProjectEntity>> GetAllProjectAsync(Guid userId) => await ListAsync(new GetProjectByUserId(userId));
+        public async Task<IList<ProjectEntity>> GetAllProjectAsync(Guid userId) => await ListAsync(new GetProjectByUserId(userId));
     }
 }
