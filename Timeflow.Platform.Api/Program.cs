@@ -1,5 +1,5 @@
+using System.Reflection;
 using Asp.Versioning;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
@@ -7,22 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Reflection;
-using Timeflow.Platform.Api.Boundary.Response;
-using Timeflow.Platform.Api.Extensions.Factories;
 using Timeflow.Platform.Api.Extensions.Service;
-using Timeflow.Platform.Api.Mappings;
 using Timeflow.Platform.Api.Swagger;
-using Timeflow.Platform.Api.UseCase.Class;
-using Timeflow.Platform.Api.UseCase.Interface;
-using Timeflow.Platform.Infrastructure;
 using Timeflow.Platform.Infrastructure.Extensions.Service;
-using Timeflow.Platform.Infrastructure.Patterns.Repository.Class;
-using Timeflow.Platform.Infrastructure.Patterns.Repository.Interface;
 using Timeflow.Platform.Middleware.Extensions.Service;
-using Timeflow.Platform.Middleware.Patterns.Proxy.Class;
-using Timeflow.Platform.Middleware.Patterns.Proxy.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -33,19 +21,16 @@ builder.Services.AddDdManagement(configuration);
 
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddTransient<DbContext, TimeFlowContext>();
-builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
+builder.Services.AddUseCases();
 
-builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+builder.Services.AddRepositoryPattern();
+builder.Services.AddUnitOfWorkPattern();
+builder.Services.AddProxyPattern();
 
-builder.Services.AddScoped<IBaseUseCase<IList<ProjectResponseViewModel>>, GetProjectsByUserId>();
-
-builder.Services.AddScoped<IProjectProxy, ProjectProxy>();
-
+builder.Services.AddSwaggerGenOptions();
 builder.Services.AddSwaggerGen(options =>
 {
     // Add a custom operation filter which sets default values
