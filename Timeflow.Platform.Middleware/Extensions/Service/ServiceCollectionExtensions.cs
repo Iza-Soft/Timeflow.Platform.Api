@@ -1,6 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using Timeflow.Platform.Middleware.Mappings;
+using Timeflow.Platform.Middleware.Patterns.Proxy.Class;
+using Timeflow.Platform.Middleware.Patterns.Proxy.Interface;
+using Timeflow.Platform.Middleware.Patterns.UnitOfWork.Class;
+using Timeflow.Platform.Middleware.Patterns.UnitOfWork.Interface;
 
 namespace Timeflow.Platform.Middleware.Extensions.Service
 {
@@ -10,6 +14,20 @@ namespace Timeflow.Platform.Middleware.Extensions.Service
         public static IServiceCollection AddMiddlewareAutoMapperProfiles(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(ProjectAutoMapperProfile));
+
+            return services;
+        }
+
+        public static IServiceCollection AddProxyPattern(this IServiceCollection services)
+        {
+            services.AddScoped<IProjectProxy, ProjectProxy>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddUnitOfWorkPattern(this IServiceCollection services)
+        {
+            services.AddTransient(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
             return services;
         }
