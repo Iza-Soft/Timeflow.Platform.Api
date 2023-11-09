@@ -1,13 +1,14 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Timeflow.Platform.Api.Boundary.Request.Class;
 using Timeflow.Platform.Api.Boundary.Response;
-using Timeflow.Platform.Api.UseCase.Abstract;
 using Timeflow.Platform.Api.UseCase.Interface;
 
 namespace Timeflow.Platform.Api.Controllers.V1
 {
+    [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
     [Produces("application/json")]
@@ -24,12 +25,14 @@ namespace Timeflow.Platform.Api.Controllers.V1
         ///// <summary>
         ///// This API returns a list of all projects by userId.
         ///// </summary>
+        ///<response code="401">Unauthorized</response>
         ///<response code="404">Resourse can't be found</response>
         ///<response code="400">The request is not valid according to requirements</response>
         ///<response code="500">Internal server error</response>
         ///<response code="200">Returns list of project based on userId</response>
         [HttpGet]
         [Route(("{userId}"))]
+        [ProducesResponseType(typeof(BaseErrorResponseViewModel), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(BaseErrorResponseViewModel), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(BaseErrorResponseViewModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(BaseErrorResponseViewModel), StatusCodes.Status500InternalServerError)]
