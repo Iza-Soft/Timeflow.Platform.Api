@@ -22,7 +22,7 @@ namespace Timeflow.Platform.Authentication.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Get()
         {
-            /*https://www.c-sharpcorner.com/article/jwt-authentication-with-refresh-tokens-in-net-6-0/ - this i am going to use for token generate with user credentials*/
+            /*https://www.c-sharpcorner.com/article/jwt-authentication-with-refresh-tokens-in-net-6-0/ or https://decatechlabs.com/asp-net-core-6-jwt-authentication - this i am going to use for token generate with user credentials*/
 
             var authClaims = new List<Claim>
                 {
