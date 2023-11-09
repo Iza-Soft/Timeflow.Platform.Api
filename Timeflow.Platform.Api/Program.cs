@@ -1,5 +1,7 @@
 using System.Reflection;
+using System.Text;
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
@@ -7,8 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Timeflow.Platform.Api.Extensions.Service;
 using Timeflow.Platform.Api.Swagger;
+using Timeflow.Platform.Authentication.Extensions.Service;
+using Timeflow.Platform.Authentication.Settings;
 using Timeflow.Platform.Infrastructure.Extensions.Service;
 using Timeflow.Platform.Middleware.Extensions.Service;
 
@@ -39,6 +45,26 @@ builder.Services.AddSwaggerGen(options =>
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     options.IncludeXmlComments(xmlPath);
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Description = "Bearer Authentication with JWT Token",
+        Type = SecuritySchemeType.Http
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference {
+                    Id = "Bearer",
+                        Type = ReferenceType.SecurityScheme
+                }
+            },
+            new List<string>()
+        }
+    });
 });
 
 builder.Services.AddApiVersioning(o =>
@@ -63,6 +89,29 @@ builder.Services.AddApiVersioning(o =>
 builder.Services.AddAutoMapperProfiles();
 builder.Services.AddMiddlewareAutoMapperProfiles();
 
+//Jwt configuration starts here
+
+JwtSettings jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
+
+builder.Services.AddAuthentication(opt => {
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+ {
+     options.TokenValidationParameters = new TokenValidationParameters
+     {
+         ValidateIssuer = true,
+         ValidateAudience = true,
+         ValidateLifetime = true,
+         ValidateIssuerSigningKey = true,
+         ValidIssuer = jwtSettings.Issuer,
+         ValidAudience = jwtSettings.Audience,
+         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecurityKey))
+     };
+ });
+//Jwt configuration ends here
+
+builder.Services.AddAuthorizeLibrary();
 #endregion
 
 var app = builder.Build();
@@ -98,8 +147,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.Run();
