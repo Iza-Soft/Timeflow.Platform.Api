@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Timeflow.Platform.Infrastructure;
 
@@ -11,9 +12,10 @@ using Timeflow.Platform.Infrastructure;
 namespace Timeflow.Platform.Infrastructure.Migrations
 {
     [DbContext(typeof(TimeFlowContext))]
-    partial class TimeFlowContextModelSnapshot : ModelSnapshot
+    [Migration("20231117141634_ChangeTypeTextToNvarcharForProjectAndTaskTables")]
+    partial class ChangeTypeTextToNvarcharForProjectAndTaskTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,7 +243,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 17, 16, 23, 44, 860, DateTimeKind.Local).AddTicks(779));
+                        .HasDefaultValue(new DateTime(2023, 11, 17, 16, 16, 34, 505, DateTimeKind.Local).AddTicks(3100));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -249,7 +251,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<Guid>("UserId")
@@ -274,7 +275,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 17, 16, 23, 44, 860, DateTimeKind.Local).AddTicks(1169));
+                        .HasDefaultValue(new DateTime(2023, 11, 17, 16, 16, 34, 505, DateTimeKind.Local).AddTicks(3833));
 
                     b.Property<string>("Notes")
                         .HasMaxLength(200)
@@ -285,12 +286,9 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
 
                     b.ToTable("Tasks", (string)null);
                 });
@@ -344,22 +342,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.TaskEntity", b =>
-                {
-                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", "Project")
-                        .WithMany("Tasks")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", b =>
-                {
-                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

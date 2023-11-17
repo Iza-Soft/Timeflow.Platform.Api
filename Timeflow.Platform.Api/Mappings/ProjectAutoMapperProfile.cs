@@ -9,11 +9,13 @@ namespace Timeflow.Platform.Api.Mappings
     {
         public ProjectAutoMapperProfile()
         {
-            CreateMap<ProjectResponseViewModel, ProjectDto>().ReverseMap()
+            CreateMap<ProjectResponseViewModel, ProjectDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
-                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.Tasks, opt => opt.MapFrom(src => src.Tasks))
+                .ReverseMap();
         }
     }
 }
