@@ -31,7 +31,8 @@ namespace Timeflow.Platform.Api.Controllers.V1
         ///<response code="500">Internal server error</response>
         ///<response code="200">Returns list of project based on userId</response>
         [HttpGet]
-        [Route(("{userId}"))]
+        [ActionName("user-id")]
+        [Route("user-id/{userId}")]
         [ProducesResponseType(typeof(BaseErrorResponseViewModel), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(BaseErrorResponseViewModel), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(BaseErrorResponseViewModel), StatusCodes.Status400BadRequest)]

@@ -1,4 +1,6 @@
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Security.Authentication;
 using System.Text;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Timeflow.Platform.Api.Extensions.Service;
 using Timeflow.Platform.Api.Swagger;
 using Timeflow.Platform.Authentication.Extensions.Service;
@@ -25,7 +28,7 @@ var configuration = builder.Configuration;
 
 builder.Services.AddDdManagement(configuration);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
@@ -108,10 +111,57 @@ builder.Services.AddAuthentication(opt => {
          ValidAudience = jwtSettings.Audience,
          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecurityKey))
      };
+     options.Events = new JwtBearerEvents
+     {
+         /*
+          * https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbearerevents?view=aspnetcore-7.0
+          * https://sandrino.dev/blog/aspnet-core-5-jwt-authorization
+          */
+         OnChallenge = async (context) => {
+             context.HandleResponse();
+             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+             context.Response.ContentType = "application/json";
+
+             context.Error = "Request Access Denied";
+
+             if (context.AuthenticateFailure != null)
+             {
+                 if (context.AuthenticateFailure.GetType() == typeof(SecurityTokenExpiredException))
+                 {
+                     var authenticationException = context.AuthenticateFailure as SecurityTokenExpiredException;
+                     context.ErrorDescription = "The token has expired";
+                 }
+                 else context.ErrorDescription = "Token validation has failed";
+
+             }
+             else
+             {
+                 context.ErrorDescription = "Òhe provision of a valid token is required";
+             }
+
+             await context.Response.WriteAsync(JsonConvert.SerializeObject(new
+             {
+                 Message = context.Error,
+                 Description = context.ErrorDescription
+             }));
+         }
+
+     };
  });
 //Jwt configuration ends here
 
 builder.Services.AddAuthorizeLibrary();
+
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("MyPolicy", builder =>
+//    {
+//        builder.WithOrigins("http://timeflow.iza-soft.com")
+//                .WithMethods("GET")
+//                .WithHeaders("content-type")
+//                .WithExposedHeaders("content-type");
+//    });
+//});
 #endregion
 
 var app = builder.Build();
@@ -146,12 +196,18 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
+
+//TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! this must be change !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//app.UseCors("MyPolicy");
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+//TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! this must be change !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
-//app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
 
 app.Run();

@@ -13,7 +13,12 @@ namespace Timeflow.Platform.Middleware.Extensions.Service
     {
         public static IServiceCollection AddMiddlewareAutoMapperProfiles(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(ProjectAutoMapperProfile));
+            Type[] profiles = { 
+                typeof(ProjectAutoMapperProfile), 
+                typeof(TaskAutoMapperProfile) 
+            };
+
+            services.AddAutoMapper(profiles);
 
             return services;
         }

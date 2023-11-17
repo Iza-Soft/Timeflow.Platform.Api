@@ -5,12 +5,9 @@ namespace Timeflow.Platform.Infrastructure.Specifications.Project
 {
     internal class GetProjectByUserId : BaseSpecification<ProjectEntity>
     {
-        public GetProjectByUserId(Guid userId) : base(x => x.UserId == userId) { }
-
-        //public GetEmployerByEmailAndReference(string email, string reference)
-        //    : base(x => x.CompanyEmailAddress.ToLower() == email.ToLower() && x.CompanyReference.ToLower() == reference.ToLower())
-        //{
-
-        //}
+        public GetProjectByUserId(Guid userId) : base(x => x.UserId == userId) 
+        {
+            AddInclude(x => x.Tasks);
+        }
     }
 }

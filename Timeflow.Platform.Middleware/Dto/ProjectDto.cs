@@ -19,5 +19,7 @@ namespace Timeflow.Platform.Middleware.Dto
         public DateTime CreatedDate { get; set; }
 
         public Guid CreatedBy { get; set; }
+
+        public IList<TaskDto>? Tasks { get; set; }
     }
 }

@@ -14,7 +14,12 @@ namespace Timeflow.Platform.Api.Extensions.Service
     {
         public static IServiceCollection AddAutoMapperProfiles(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(ProjectAutoMapperProfile));
+            Type[] profiles = {
+                typeof(ProjectAutoMapperProfile),
+                typeof(TaskAutoMapperProfile),
+            };
+
+            services.AddAutoMapper(profiles);
 
             return services;
         }

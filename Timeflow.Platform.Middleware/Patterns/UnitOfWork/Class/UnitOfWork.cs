@@ -3,6 +3,9 @@ using Timeflow.Platform.Middleware.Patterns.UnitOfWork.Interface;
 
 namespace Timeflow.Platform.Middleware.Patterns.UnitOfWork.Class
 {
+    /*
+     * https://learn.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application
+     */
     public class UnitOfWork<T> : IUnitOfWork<T> where T: class
     {
         private readonly T repository;
