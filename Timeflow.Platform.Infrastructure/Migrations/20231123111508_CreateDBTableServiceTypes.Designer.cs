@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Timeflow.Platform.Infrastructure;
 
@@ -11,9 +12,10 @@ using Timeflow.Platform.Infrastructure;
 namespace Timeflow.Platform.Infrastructure.Migrations
 {
     [DbContext(typeof(TimeFlowContext))]
-    partial class TimeFlowContextModelSnapshot : ModelSnapshot
+    [Migration("20231123111508_CreateDBTableServiceTypes")]
+    partial class CreateDBTableServiceTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,7 +243,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 23, 13, 26, 7, 384, DateTimeKind.Local).AddTicks(217));
+                        .HasDefaultValue(new DateTime(2023, 11, 23, 13, 15, 8, 133, DateTimeKind.Local).AddTicks(2165));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -274,7 +276,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 23, 13, 26, 7, 384, DateTimeKind.Local).AddTicks(1834));
+                        .HasDefaultValue(new DateTime(2023, 11, 23, 13, 15, 8, 133, DateTimeKind.Local).AddTicks(3721));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -304,9 +306,9 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 23, 13, 26, 7, 384, DateTimeKind.Local).AddTicks(673));
+                        .HasDefaultValue(new DateTime(2023, 11, 23, 13, 15, 8, 133, DateTimeKind.Local).AddTicks(2580));
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Notes")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 

@@ -16,10 +16,13 @@ namespace Timeflow.Platform.Infrastructure
 
         public virtual DbSet<TaskEntity> Tasks { get; set; } = null!;
 
+        public virtual DbSet<ServiceTypeEntity> ServiceTypes { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProjectEntity>().Configure();
             modelBuilder.Entity<TaskEntity>().Configure();
+            modelBuilder.Entity<ServiceTypeEntity>().Configure();
 
             base.OnModelCreating(modelBuilder);
         }
