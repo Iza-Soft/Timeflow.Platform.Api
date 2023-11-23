@@ -6,7 +6,7 @@
 
         public string Title { get; set; } = null!;
 
-        public string? Notes { get; set; }
+        public string? Description { get; set; }
 
         public virtual ProjectEntity Project { get; set; } = null!;
     }

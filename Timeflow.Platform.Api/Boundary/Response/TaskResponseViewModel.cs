@@ -13,7 +13,7 @@ namespace Timeflow.Platform.Api.Boundary.Response
         [JsonProperty("Title")]
         public string Title { get; set; } = null!;
 
-        [JsonProperty("Notes")]
-        public string? Notes { get; set; }
+        [JsonProperty("Description")]
+        public string? Description { get; set; }
     }
 }
