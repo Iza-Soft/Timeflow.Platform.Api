@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Timeflow.Platform.Infrastructure;
 
@@ -11,9 +12,10 @@ using Timeflow.Platform.Infrastructure;
 namespace Timeflow.Platform.Infrastructure.Migrations
 {
     [DbContext(typeof(TimeFlowContext))]
-    partial class TimeFlowContextModelSnapshot : ModelSnapshot
+    [Migration("20231123130503_ChangeWorkingHoursTypeColumnIntoTableTimesheet")]
+    partial class ChangeWorkingHoursTypeColumnIntoTableTimesheet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,7 +243,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 23, 16, 27, 36, 524, DateTimeKind.Local).AddTicks(6753));
+                        .HasDefaultValue(new DateTime(2023, 11, 23, 15, 5, 3, 581, DateTimeKind.Local).AddTicks(7622));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -274,7 +276,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 23, 16, 27, 36, 525, DateTimeKind.Local).AddTicks(276));
+                        .HasDefaultValue(new DateTime(2023, 11, 23, 15, 5, 3, 581, DateTimeKind.Local).AddTicks(9119));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -304,22 +306,13 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 23, 16, 27, 36, 524, DateTimeKind.Local).AddTicks(7386));
+                        .HasDefaultValue(new DateTime(2023, 11, 23, 15, 5, 3, 581, DateTimeKind.Local).AddTicks(8006));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<decimal>("PaymentAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("PaymentTypeId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServiceTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -330,8 +323,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("ServiceTypeId");
 
                     b.ToTable("Tasks", (string)null);
                 });
@@ -350,7 +341,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 23, 16, 27, 36, 525, DateTimeKind.Local).AddTicks(610));
+                        .HasDefaultValue(new DateTime(2023, 11, 23, 15, 5, 3, 581, DateTimeKind.Local).AddTicks(9414));
 
                     b.Property<int>("DayOfMonth")
                         .HasColumnType("int");
@@ -435,23 +426,10 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.ServiceTypeEntity", "ServiceType")
-                        .WithMany("Tasks")
-                        .HasForeignKey("ServiceTypeId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
                     b.Navigation("Project");
-
-                    b.Navigation("ServiceType");
                 });
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", b =>
-                {
-                    b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ServiceTypeEntity", b =>
                 {
                     b.Navigation("Tasks");
                 });
