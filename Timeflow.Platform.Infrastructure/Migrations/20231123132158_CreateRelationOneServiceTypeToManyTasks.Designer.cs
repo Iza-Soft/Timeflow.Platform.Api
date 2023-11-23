@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Timeflow.Platform.Infrastructure;
 
@@ -11,9 +12,10 @@ using Timeflow.Platform.Infrastructure;
 namespace Timeflow.Platform.Infrastructure.Migrations
 {
     [DbContext(typeof(TimeFlowContext))]
-    partial class TimeFlowContextModelSnapshot : ModelSnapshot
+    [Migration("20231123132158_CreateRelationOneServiceTypeToManyTasks")]
+    partial class CreateRelationOneServiceTypeToManyTasks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,7 +243,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 23, 16, 27, 36, 524, DateTimeKind.Local).AddTicks(6753));
+                        .HasDefaultValue(new DateTime(2023, 11, 23, 15, 21, 58, 134, DateTimeKind.Local).AddTicks(1916));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -274,7 +276,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 23, 16, 27, 36, 525, DateTimeKind.Local).AddTicks(276));
+                        .HasDefaultValue(new DateTime(2023, 11, 23, 15, 21, 58, 134, DateTimeKind.Local).AddTicks(4131));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -304,17 +306,11 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 23, 16, 27, 36, 524, DateTimeKind.Local).AddTicks(7386));
+                        .HasDefaultValue(new DateTime(2023, 11, 23, 15, 21, 58, 134, DateTimeKind.Local).AddTicks(2369));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
-
-                    b.Property<decimal>("PaymentAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("PaymentTypeId")
-                        .HasColumnType("int");
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
@@ -350,7 +346,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 23, 16, 27, 36, 525, DateTimeKind.Local).AddTicks(610));
+                        .HasDefaultValue(new DateTime(2023, 11, 23, 15, 21, 58, 134, DateTimeKind.Local).AddTicks(4409));
 
                     b.Property<int>("DayOfMonth")
                         .HasColumnType("int");
