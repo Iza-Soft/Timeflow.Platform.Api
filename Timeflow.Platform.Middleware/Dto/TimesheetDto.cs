@@ -1,7 +1,9 @@
-﻿namespace Timeflow.Platform.Infrastructure.Entities
+﻿namespace Timeflow.Platform.Middleware.Dto
 {
-    public class TimeSheetEntity : BaseEntity<int>
+    public class TimesheetDto
     {
+        public int Id { get; set; }
+
         public int TaskId { get; set; }
 
         public int DayOfMonth { get; set; }
@@ -16,7 +18,10 @@
 
         public string? Notes { get; set; }
 
-        public virtual TaskEntity Task { get; set; } = null!;
+        public DateTime CreatedDate { get; set; }
 
+        public Guid CreatedBy { get; set; }
+
+        public TaskDto Task { get; set; } = null!;
     }
 }

@@ -9,7 +9,7 @@ namespace Timeflow.Platform.Api.Mappings
     {
         public ProjectAutoMapperProfile()
         {
-            CreateMap<ProjectResponseViewModel, ProjectDto>()
+            CreateMap<ProjectResponse, ProjectDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))

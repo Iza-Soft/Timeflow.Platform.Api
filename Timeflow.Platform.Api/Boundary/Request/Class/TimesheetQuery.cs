@@ -2,8 +2,10 @@
 
 namespace Timeflow.Platform.Api.Boundary.Request.Class
 {
-    public class ProjectRequestViewModel : RequestViewModel
+    public class TimesheetQuery : RequestViewModel
     {
         public Guid UserId { get; set; }
+
+        public DateTime Date { get; set; }
     }
 }

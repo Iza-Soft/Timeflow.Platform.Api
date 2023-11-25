@@ -1,4 +1,6 @@
-﻿namespace Timeflow.Platform.Middleware.Dto
+﻿using Timeflow.Platform.Infrastructure.Entities;
+
+namespace Timeflow.Platform.Middleware.Dto
 {
     public class TaskDto
     {
@@ -13,5 +15,7 @@
         public DateTime CreatedDate { get; set; }
 
         public Guid CreatedBy { get; set; }
+
+        public ProjectEntity Project { get; set; } = null!;
     }
 }

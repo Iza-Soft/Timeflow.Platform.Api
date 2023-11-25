@@ -3,9 +3,9 @@ using Timeflow.Platform.Infrastructure.Specifications.Interface;
 
 namespace Timeflow.Platform.Infrastructure.Specifications.Project
 {
-    internal class GetProjectByUserId : BaseSpecification<ProjectEntity>
+    internal class GetProjectSpec : BaseSpecification<ProjectEntity>
     {
-        public GetProjectByUserId(Guid userId) : base(x => x.UserId == userId) 
+        public GetProjectSpec(Guid userId) : base(x => x.UserId == userId) 
         {
             AddInclude(x => x.Tasks);
         }

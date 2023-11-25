@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
-using Timeflow.Platform.Api.Boundary.Response;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Timeflow.Platform.Infrastructure.Entities;
 using Timeflow.Platform.Middleware.Dto;
 
-namespace Timeflow.Platform.Api.Extensions.Factories
+namespace Timeflow.Platform.Middleware.Extensions.Factories
 {
-    public static class ProjectResponseFactory
+    public static class TimesheetDtoFactory
     {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         private static IMapper _mapper;
@@ -16,14 +20,14 @@ namespace Timeflow.Platform.Api.Extensions.Factories
             _mapper = mapper;
         }
 
-        public static IList<ProjectResponse> ToResponse(this IList<ProjectDto> entities)
+        public static IList<TimesheetDto> ToResult(this IList<TimeSheetEntity> entities)
         {
-            return entities.Select(ToResponse).ToList();
+            return entities.Select(ToResult).ToList();
         }
 
-        public static ProjectResponse ToResponse(this ProjectDto entity)
+        public static TimesheetDto ToResult(this TimeSheetEntity entity)
         {
-            return _mapper.Map<ProjectResponse>(entity);
+            return _mapper.Map<TimesheetDto>(entity);
         }
     }
 }

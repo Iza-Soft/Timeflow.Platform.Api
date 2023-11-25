@@ -2,7 +2,7 @@
 
 namespace Timeflow.Platform.Api.Boundary.Response
 {
-    public class TaskResponseViewModel
+    public class TaskResponse
     {
         [JsonProperty("Id")]
         public int Id { get; set; }

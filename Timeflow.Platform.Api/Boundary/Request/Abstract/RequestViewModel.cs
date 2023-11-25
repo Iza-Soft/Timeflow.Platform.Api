@@ -1,7 +1,10 @@
-﻿namespace Timeflow.Platform.Api.Boundary.Request.Abstract
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+
+namespace Timeflow.Platform.Api.Boundary.Request.Abstract
 {
     public abstract class RequestViewModel
     {
+        [BindNever]
         public virtual string RequestId => new HttpContextAccessor().HttpContext!.TraceIdentifier;
     }
 }

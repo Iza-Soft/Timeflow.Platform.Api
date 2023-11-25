@@ -8,7 +8,7 @@ namespace Timeflow.Platform.Api.Mappings
     {
         public TaskAutoMapperProfile()
         {
-            CreateMap<TaskResponseViewModel, TaskDto>()
+            CreateMap<TaskResponse, TaskDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))

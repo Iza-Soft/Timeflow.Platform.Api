@@ -17,5 +17,7 @@
         public virtual ProjectEntity Project { get; set; } = null!;
 
         public virtual ServiceTypeEntity ServiceType { get; set; } = null!;
+
+        public virtual ICollection<TimeSheetEntity> Timesheets { get; set; } = null!;
     }
 }
