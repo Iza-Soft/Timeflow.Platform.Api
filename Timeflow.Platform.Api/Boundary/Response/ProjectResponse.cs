@@ -3,7 +3,7 @@ using Timeflow.Platform.Middleware.Dto;
 
 namespace Timeflow.Platform.Api.Boundary.Response
 {
-    public class ProjectResponseViewModel
+    public class ProjectResponse
     {
         [JsonProperty("Id")]
         public int Id { get; set; }
@@ -18,6 +18,6 @@ namespace Timeflow.Platform.Api.Boundary.Response
         public string? Description { get; set; }
 
         [JsonProperty("Tasks")]
-        public IList<TaskResponseViewModel>? Tasks { get; set; }
+        public IList<TaskResponse>? Tasks { get; set; }
     }
 }

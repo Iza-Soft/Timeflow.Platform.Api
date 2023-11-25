@@ -26,6 +26,7 @@ namespace Timeflow.Platform.Middleware.Extensions.Service
         public static IServiceCollection AddProxyPattern(this IServiceCollection services)
         {
             services.AddScoped<IProjectProxy, ProjectProxy>();
+            services.AddScoped<ITimesheetProxy, TimesheetProxy>();
 
             return services;
         }

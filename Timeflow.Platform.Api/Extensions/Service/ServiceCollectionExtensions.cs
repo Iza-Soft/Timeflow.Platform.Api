@@ -26,7 +26,8 @@ namespace Timeflow.Platform.Api.Extensions.Service
 
         public static IServiceCollection AddUseCases(this IServiceCollection services)
         {
-            services.AddScoped<IBaseUseCase<IList<ProjectResponseViewModel>>, GetProjectsByUserId>();
+            services.AddScoped<IBaseUseCase<IList<ProjectResponse>>, GetProjectsByUserId>();
+            services.AddScoped<IBaseUseCase<IList<TimesheetResponse>>, GetWeeklyTimesheetByUserId>();
 
             return services;
         }

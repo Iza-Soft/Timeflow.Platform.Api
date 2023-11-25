@@ -42,7 +42,8 @@ namespace Timeflow.Platform.Infrastructure.Extensions.Service
 
         public static IServiceCollection AddRepositoryPattern(this IServiceCollection services)
         {
-            services.AddTransient<IProjectRepository, ProjectRepository>(); ;
+            services.AddTransient<IProjectRepository, ProjectRepository>();
+            services.AddTransient<ITimesheetRepository, TimesheetRepository>();
 
             return services;
         }

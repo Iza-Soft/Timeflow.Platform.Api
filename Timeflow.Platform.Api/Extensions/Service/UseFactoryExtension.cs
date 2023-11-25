@@ -13,6 +13,7 @@ namespace Timeflow.Platform.Api.Extensions.Service
             /*read out Microsoft.AspNetCore.Http.Abstraction (depricated): https://www.niceonecode.com/question/31142/what-is-alternative-for-microsoft.aspnetcore.http.abstractions-in-.net-6.0-*/
 #pragma warning disable CS8604 // Possible null reference argument.
             ProjectResponseFactory.Configure(app.Services.GetService<IMapper>());
+            TimesheetRequestFactory.Configure(app.Services.GetService<IMapper>());
 #pragma warning restore CS8604 // Possible null reference argument.
         }
     }

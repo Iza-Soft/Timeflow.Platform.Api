@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Timeflow.Platform.Infrastructure;
 
@@ -11,9 +12,10 @@ using Timeflow.Platform.Infrastructure;
 namespace Timeflow.Platform.Infrastructure.Migrations
 {
     [DbContext(typeof(TimeFlowContext))]
-    partial class TimeFlowContextModelSnapshot : ModelSnapshot
+    [Migration("20231124152318_AddWeekOfYearColumnInTimesheetTable")]
+    partial class AddWeekOfYearColumnInTimesheetTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,7 +243,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 25, 18, 19, 16, 544, DateTimeKind.Local).AddTicks(8502));
+                        .HasDefaultValue(new DateTime(2023, 11, 24, 17, 23, 18, 794, DateTimeKind.Local).AddTicks(248));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -274,7 +276,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 25, 18, 19, 16, 545, DateTimeKind.Local).AddTicks(1026));
+                        .HasDefaultValue(new DateTime(2023, 11, 24, 17, 23, 18, 794, DateTimeKind.Local).AddTicks(2604));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -304,7 +306,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 25, 18, 19, 16, 544, DateTimeKind.Local).AddTicks(8990));
+                        .HasDefaultValue(new DateTime(2023, 11, 24, 17, 23, 18, 794, DateTimeKind.Local).AddTicks(708));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -351,7 +353,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 25, 18, 19, 16, 545, DateTimeKind.Local).AddTicks(1346));
+                        .HasDefaultValue(new DateTime(2023, 11, 24, 17, 23, 18, 794, DateTimeKind.Local).AddTicks(3033));
 
                     b.Property<int>("DayOfMonth")
                         .HasColumnType("int");
@@ -376,8 +378,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TaskId");
 
                     b.ToTable("TimeSheets", (string)null);
                 });
@@ -452,17 +452,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Navigation("ServiceType");
                 });
 
-            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.TimeSheetEntity", b =>
-                {
-                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.TaskEntity", "Task")
-                        .WithMany("Timesheets")
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("Task");
-                });
-
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", b =>
                 {
                     b.Navigation("Tasks");
@@ -471,11 +460,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ServiceTypeEntity", b =>
                 {
                     b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.TaskEntity", b =>
-                {
-                    b.Navigation("Timesheets");
                 });
 #pragma warning restore 612, 618
         }
