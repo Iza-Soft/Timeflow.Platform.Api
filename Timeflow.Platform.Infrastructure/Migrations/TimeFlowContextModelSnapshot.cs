@@ -241,7 +241,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 25, 18, 19, 16, 544, DateTimeKind.Local).AddTicks(8502));
+                        .HasDefaultValue(new DateTime(2023, 11, 28, 12, 58, 47, 346, DateTimeKind.Local).AddTicks(9803));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -257,37 +257,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projects", (string)null);
-                });
-
-            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ServiceTypeEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 25, 18, 19, 16, 545, DateTimeKind.Local).AddTicks(1026));
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ServiceTypes", (string)null);
+                    b.ToTable("Project", (string)null);
                 });
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.TaskEntity", b =>
@@ -304,7 +274,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 25, 18, 19, 16, 544, DateTimeKind.Local).AddTicks(8990));
+                        .HasDefaultValue(new DateTime(2023, 11, 28, 12, 58, 47, 347, DateTimeKind.Local).AddTicks(335));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -314,27 +284,28 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("PaymentTypeId")
-                        .HasColumnType("int");
+                    b.Property<byte>("PaymentTypeId")
+                        .HasColumnType("tinyint");
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ServiceTypeId")
-                        .HasColumnType("int");
+                    b.Property<byte>("ServiceTypeId")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
 
-                    b.HasIndex("ServiceTypeId");
-
-                    b.ToTable("Tasks", (string)null);
+                    b.ToTable("Task", (string)null);
                 });
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.TimeSheetEntity", b =>
@@ -351,7 +322,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 25, 18, 19, 16, 545, DateTimeKind.Local).AddTicks(1346));
+                        .HasDefaultValue(new DateTime(2023, 11, 28, 12, 58, 47, 347, DateTimeKind.Local).AddTicks(2168));
 
                     b.Property<int>("DayOfMonth")
                         .HasColumnType("int");
@@ -366,6 +337,9 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<int>("TaskId")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("WeekOfYear")
                         .HasColumnType("int");
 
@@ -379,7 +353,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("TimeSheets", (string)null);
+                    b.ToTable("TimeSheet", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -441,15 +415,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.ServiceTypeEntity", "ServiceType")
-                        .WithMany("Tasks")
-                        .HasForeignKey("ServiceTypeId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
                     b.Navigation("Project");
-
-                    b.Navigation("ServiceType");
                 });
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.TimeSheetEntity", b =>
@@ -464,11 +430,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", b =>
-                {
-                    b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ServiceTypeEntity", b =>
                 {
                     b.Navigation("Tasks");
                 });

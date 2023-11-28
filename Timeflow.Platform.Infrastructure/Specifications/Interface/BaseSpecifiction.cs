@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using Timeflow.Platform.Infrastructure.Enum;
+using Timeflow.Platform.Infrastructure.Enums;
 
 namespace Timeflow.Platform.Infrastructure.Specifications.Interface
 {
@@ -18,7 +18,7 @@ namespace Timeflow.Platform.Infrastructure.Specifications.Interface
 
         public Expression<Func<T, object>> SortOn { get; private set; }
 
-        public SortDirection SortDirection { get; private set; } = SortDirection.Asc;
+        public SortDirectionEnum SortDirection { get; private set; } = SortDirectionEnum.Asc;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         protected BaseSpecification() => Criteria = t => true;
@@ -48,7 +48,7 @@ namespace Timeflow.Platform.Infrastructure.Specifications.Interface
             SortOn = sortOnExpression;
         }
 
-        protected virtual void ApplySortDirection(SortDirection sortDirection)
+        protected virtual void ApplySortDirection(SortDirectionEnum sortDirection)
         {
             SortDirection = sortDirection;
         }

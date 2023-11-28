@@ -20,9 +20,9 @@ namespace Timeflow.Platform.Middleware.Gateways
 
         public async Task<IList<TimesheetDto>> GetWeeklyTimesheetByUserIdAsync(TimesheetDto requestDto)
         {
-            var projects = await this._unitOfWork.Instance.GetWeeklyTimesheetByUserIdAsync(requestDto.CreatedBy, requestDto.WeekOfYear, requestDto.Year);
+            var weeklyTimesheets = await this._unitOfWork.Instance.GetWeeklyTimesheetByUserIdAsync(requestDto.UserId, requestDto.WeekOfYear, requestDto.Year);
 
-            return projects.ToResult();
+            return weeklyTimesheets.ToResult();
         }
     }
 }

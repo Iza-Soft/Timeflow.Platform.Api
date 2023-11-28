@@ -18,6 +18,8 @@
 
         public string? Notes { get; set; }
 
+        public Guid UserId { get; set; }
+
         public DateTime CreatedDate { get; set; }
 
         public Guid CreatedBy { get; set; }

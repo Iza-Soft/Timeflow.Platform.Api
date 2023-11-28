@@ -8,7 +8,7 @@ namespace Timeflow.Platform.Middleware.Mappings
     {
         public ProjectAutoMapperProfile() 
         {
-            CreateMap<ProjectEntity, ProjectDto>().ForMember(dest => dest.Tasks, opt => opt.MapFrom(src => src.Tasks)).ReverseMap();
+            CreateMap<ProjectEntity, ProjectDto>().ReverseMap();
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Timeflow.Platform.Infrastructure.Specifications.Timesheet
 {
     internal class GetWeeklyTimesheetSpec : BaseSpecification<TimeSheetEntity>
     {
-        public GetWeeklyTimesheetSpec(Guid userId, int weekOfYear, int year) : base(x => x.CreatedBy == userId && x.WeekOfYear == weekOfYear && x.Year == year)
+        public GetWeeklyTimesheetSpec(Guid userId, int weekOfYear, int year) : base(x => x.UserId == userId && x.WeekOfYear == weekOfYear && x.Year == year)
         {
             AddInclude(x => x.Task);
             AddInclude(x => x.Task.Project);
