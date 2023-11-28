@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Timeflow.Platform.Infrastructure.Enum;
+using Timeflow.Platform.Infrastructure.Enums;
 using Timeflow.Platform.Infrastructure.Patterns.Repository.Interface;
 using Timeflow.Platform.Infrastructure.Specifications.Interface;
 
@@ -63,7 +63,7 @@ namespace Timeflow.Platform.Infrastructure.Patterns.Repository.Abstract
 
             if (spec.SortOn != null)
             {
-                query = spec.SortDirection == SortDirection.Asc ? query.OrderBy(spec.SortOn) : query.OrderByDescending(spec.SortOn);
+                query = spec.SortDirection == SortDirectionEnum.Asc ? query.OrderBy(spec.SortOn) : query.OrderByDescending(spec.SortOn);
             }
 
             if (spec.Offset != null)

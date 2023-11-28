@@ -1,14 +1,16 @@
-﻿namespace Timeflow.Platform.Infrastructure.Entities
+﻿using Timeflow.Platform.Infrastructure.Enums;
+
+namespace Timeflow.Platform.Infrastructure.Entities
 {
     public class TaskEntity : BaseEntity<int>
     {
         public int ProjectId { get; set; }
 
-        public int ServiceTypeId { get; set; }
+        public ServiceTypeEnum ServiceTypeId { get; set; }
 
         public string Title { get; set; } = null!;
 
-        public int PaymentTypeId { get; set; } /*{id=0, Name=HourlyRate} {id=1, Name=LumpSum}*/
+        public PaymentTypeEnum PaymentTypeId { get; set; }
 
         public decimal PaymentAmount { get; set; }
 
@@ -17,10 +19,6 @@
         public Guid UserId { get; set; }
 
         public virtual ProjectEntity Project { get; set; } = null!;
-
-        public virtual ServiceTypeEntity ServiceType { get; set; } = null!;
-
-        public virtual PaymentTypeEntity PaymentType { get; set; } = null!;
 
         public virtual ICollection<TimeSheetEntity> Timesheets { get; set; } = null!;
     }
