@@ -14,9 +14,13 @@
 
         public string? Description { get; set; }
 
+        public Guid UserId { get; set; }
+
         public virtual ProjectEntity Project { get; set; } = null!;
 
         public virtual ServiceTypeEntity ServiceType { get; set; } = null!;
+
+        public virtual PaymentTypeEntity PaymentType { get; set; } = null!;
 
         public virtual ICollection<TimeSheetEntity> Timesheets { get; set; } = null!;
     }

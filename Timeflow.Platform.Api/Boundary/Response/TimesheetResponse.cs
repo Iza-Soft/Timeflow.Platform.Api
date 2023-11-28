@@ -19,6 +19,9 @@ namespace Timeflow.Platform.Api.Boundary.Response
         [JsonProperty("Notes")]
         public string? Notes { get; set; }
 
+        [JsonProperty("UserId")]
+        public Guid UserId { get; set; }
+
         [JsonProperty("Date")]
         public DateTime CreatedDate { get; set; }
 

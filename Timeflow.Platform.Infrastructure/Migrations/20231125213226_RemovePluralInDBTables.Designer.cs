@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Timeflow.Platform.Infrastructure;
 
@@ -11,9 +12,10 @@ using Timeflow.Platform.Infrastructure;
 namespace Timeflow.Platform.Infrastructure.Migrations
 {
     [DbContext(typeof(TimeFlowContext))]
-    partial class TimeFlowContextModelSnapshot : ModelSnapshot
+    [Migration("20231125213226_RemovePluralInDBTables")]
+    partial class RemovePluralInDBTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,7 +243,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 25, 23, 42, 17, 870, DateTimeKind.Local).AddTicks(2814));
+                        .HasDefaultValue(new DateTime(2023, 11, 25, 23, 32, 26, 739, DateTimeKind.Local).AddTicks(4301));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -271,7 +273,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 25, 23, 42, 17, 869, DateTimeKind.Local).AddTicks(5610));
+                        .HasDefaultValue(new DateTime(2023, 11, 25, 23, 32, 26, 739, DateTimeKind.Local).AddTicks(566));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -304,7 +306,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 25, 23, 42, 17, 870, DateTimeKind.Local).AddTicks(833));
+                        .HasDefaultValue(new DateTime(2023, 11, 25, 23, 32, 26, 739, DateTimeKind.Local).AddTicks(2936));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -334,7 +336,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 25, 23, 42, 17, 869, DateTimeKind.Local).AddTicks(6408));
+                        .HasDefaultValue(new DateTime(2023, 11, 25, 23, 32, 26, 739, DateTimeKind.Local).AddTicks(1030));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -363,8 +365,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PaymentTypeId");
-
                     b.HasIndex("ProjectId");
 
                     b.HasIndex("ServiceTypeId");
@@ -386,7 +386,7 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 25, 23, 42, 17, 870, DateTimeKind.Local).AddTicks(1587));
+                        .HasDefaultValue(new DateTime(2023, 11, 25, 23, 32, 26, 739, DateTimeKind.Local).AddTicks(3255));
 
                     b.Property<int>("DayOfMonth")
                         .HasColumnType("int");
@@ -473,12 +473,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.TaskEntity", b =>
                 {
-                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.PaymentTypeEntity", "PaymentType")
-                        .WithMany("Tasks")
-                        .HasForeignKey("PaymentTypeId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
                     b.HasOne("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", "Project")
                         .WithMany("Tasks")
                         .HasForeignKey("ProjectId")
@@ -490,8 +484,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                         .HasForeignKey("ServiceTypeId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
-
-                    b.Navigation("PaymentType");
 
                     b.Navigation("Project");
 
@@ -507,11 +499,6 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Task");
-                });
-
-            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.PaymentTypeEntity", b =>
-                {
-                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", b =>

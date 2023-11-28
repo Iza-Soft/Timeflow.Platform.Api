@@ -11,7 +11,7 @@ namespace Timeflow.Platform.Infrastructure.Mappings
             modelBuilder.Property(x => x.Notes).HasColumnType("nvarchar").HasMaxLength(200);
             modelBuilder.Property(x => x.CreatedDate).HasDefaultValue(DateTime.Now);
             modelBuilder.HasOne(x => x.Task).WithMany(y => y.Timesheets).HasForeignKey(x => x.TaskId).OnDelete(DeleteBehavior.ClientCascade);
-            modelBuilder.ToTable("TimeSheets");
+            modelBuilder.ToTable("TimeSheet");
         }
     }
 }

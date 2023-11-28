@@ -20,12 +20,15 @@ namespace Timeflow.Platform.Infrastructure
 
         public virtual DbSet<TimeSheetEntity> TimeSheets { get; set; } = null!;
 
+        public virtual DbSet<PaymentTypeEntity> PaymentTypes { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProjectEntity>().Configure();
             modelBuilder.Entity<TaskEntity>().Configure();
             modelBuilder.Entity<ServiceTypeEntity>().Configure();
             modelBuilder.Entity<TimeSheetEntity>().Configure();
+            modelBuilder.Entity<PaymentTypeEntity>().Configure();
 
             base.OnModelCreating(modelBuilder);
         }

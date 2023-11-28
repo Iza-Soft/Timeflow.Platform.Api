@@ -12,7 +12,7 @@ namespace Timeflow.Platform.Infrastructure.Mappings
             modelBuilder.Property(x => x.Title).HasColumnType("nvarchar").HasMaxLength(50);
             modelBuilder.Property(x => x.Description).HasColumnType("nvarchar").HasMaxLength(200);
             modelBuilder.Property(x => x.CreatedDate).HasDefaultValue(DateTime.Now);
-            modelBuilder.ToTable("Projects");
+            modelBuilder.ToTable("Project");
         }
     }
 }

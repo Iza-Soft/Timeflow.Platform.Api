@@ -16,6 +16,8 @@
 
         public string? Notes { get; set; }
 
+        public Guid UserId { get; set; }
+
         public virtual TaskEntity Task { get; set; } = null!;
 
     }
