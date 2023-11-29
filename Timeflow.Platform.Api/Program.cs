@@ -1,4 +1,9 @@
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Security.Authentication;
+using System.Text;
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
@@ -6,18 +11,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Reflection;
-using Timeflow.Platform.Api.Boundary.Response;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
+using Timeflow.Platform.Api.Extensions.Service;
 using Timeflow.Platform.Api.Swagger;
-using Timeflow.Platform.Api.UseCase.Class;
-using Timeflow.Platform.Api.UseCase.Interface;
-using Timeflow.Platform.Infrastructure;
+using Timeflow.Platform.Authentication.Extensions.Service;
+using Timeflow.Platform.Authentication.Settings;
 using Timeflow.Platform.Infrastructure.Extensions.Service;
-using Timeflow.Platform.Infrastructure.Patterns.Repository.Class;
-using Timeflow.Platform.Infrastructure.Patterns.Repository.Interface;
-using Timeflow.Platform.Middleware.Patterns.Proxy.Class;
-using Timeflow.Platform.Middleware.Patterns.Proxy.Interface;
+using Timeflow.Platform.Middleware.Extensions.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -26,21 +28,18 @@ var configuration = builder.Configuration;
 
 builder.Services.AddDdManagement(configuration);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddTransient<DbContext, TimeFlowContext>();
-builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
+builder.Services.AddUseCases();
 
-builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+builder.Services.AddRepositoryPattern();
+builder.Services.AddUnitOfWorkPattern();
+builder.Services.AddProxyPattern();
 
-builder.Services.AddScoped<IBaseUseCase<IList<ProjectResponseViewModel>>, GetProjectsByUserId>();
-
-builder.Services.AddScoped<IProjectProxy, ProjectProxy>();
-
+builder.Services.AddSwaggerGenOptions();
 builder.Services.AddSwaggerGen(options =>
 {
     // Add a custom operation filter which sets default values
@@ -49,6 +48,27 @@ builder.Services.AddSwaggerGen(options =>
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     options.IncludeXmlComments(xmlPath);
+
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Description = "Bearer Authentication with JWT Token",
+        Type = SecuritySchemeType.Http
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference {
+                    Id = "Bearer",
+                        Type = ReferenceType.SecurityScheme
+                }
+            },
+            new List<string>()
+        }
+    });
 });
 
 builder.Services.AddApiVersioning(o =>
@@ -70,9 +90,85 @@ builder.Services.AddApiVersioning(o =>
     options.SubstituteApiVersionInUrl = true;
 }).AddMvc();
 
+builder.Services.AddAutoMapperProfiles();
+builder.Services.AddMiddlewareAutoMapperProfiles();
+
+//Jwt configuration starts here
+
+JwtSettings jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
+
+builder.Services.AddAuthentication(opt => {
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+ {
+     options.TokenValidationParameters = new TokenValidationParameters
+     {
+         ValidateIssuer = true,
+         ValidateAudience = true,
+         ValidateLifetime = true,
+         ValidateIssuerSigningKey = true,
+         ValidIssuer = jwtSettings.Issuer,
+         ValidAudience = jwtSettings.Audience,
+         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecurityKey))
+     };
+     options.Events = new JwtBearerEvents
+     {
+         /*
+          * https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbearerevents?view=aspnetcore-7.0
+          * https://sandrino.dev/blog/aspnet-core-5-jwt-authorization
+          */
+         OnChallenge = async (context) => {
+             context.HandleResponse();
+             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+             context.Response.ContentType = "application/json";
+
+             context.Error = "Request Access Denied";
+
+             if (context.AuthenticateFailure != null)
+             {
+                 if (context.AuthenticateFailure.GetType() == typeof(SecurityTokenExpiredException))
+                 {
+                     var authenticationException = context.AuthenticateFailure as SecurityTokenExpiredException;
+                     context.ErrorDescription = "The token has expired";
+                 }
+                 else context.ErrorDescription = "Token validation has failed";
+
+             }
+             else
+             {
+                 context.ErrorDescription = "Òhe provision of a valid token is required";
+             }
+
+             await context.Response.WriteAsync(JsonConvert.SerializeObject(new
+             {
+                 Message = context.Error,
+                 Description = context.ErrorDescription
+             }));
+         }
+
+     };
+ });
+//Jwt configuration ends here
+
+builder.Services.AddAuthorizeLibrary();
+
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("MyPolicy", builder =>
+//    {
+//        builder.WithOrigins("http://timeflow.iza-soft.com")
+//                .WithMethods("GET")
+//                .WithHeaders("content-type")
+//                .WithExposedHeaders("content-type");
+//    });
+//});
 #endregion
 
 var app = builder.Build();
+
+app.UseFactory();
+app.UseMiddlewareFactory();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -101,9 +197,18 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
 
+//TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! this must be change !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//app.UseCors("MyPolicy");
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+//TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! this must be change !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
 
 app.Run();

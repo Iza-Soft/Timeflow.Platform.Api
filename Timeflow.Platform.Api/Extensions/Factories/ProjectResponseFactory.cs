@@ -1,4 +1,5 @@
-﻿using Timeflow.Platform.Api.Boundary.Response;
+﻿using AutoMapper;
+using Timeflow.Platform.Api.Boundary.Response;
 using Timeflow.Platform.Infrastructure.Entities;
 using Timeflow.Platform.Middleware.Dto;
 
@@ -6,14 +7,23 @@ namespace Timeflow.Platform.Api.Extensions.Factories
 {
     public static class ProjectResponseFactory
     {
-        public static IList<ProjectResponseViewModel> ToResult(this IList<ProjectDto> entities)
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        private static IMapper _mapper;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
+        public static void Configure(IMapper mapper)
         {
-            return entities.Select(ToResult).ToList();
+            _mapper = mapper;
         }
 
-        public static ProjectResponseViewModel ToResult(this ProjectDto entity)
+        public static IList<ProjectResponse> ToResponse(this IList<ProjectDto> entities)
         {
-            return new ProjectResponseViewModel() { Id = entity.Id, UserId = entity.UserId, Title = entity.Title, Description = entity.Description };
+            return entities.Select(ToResponse).ToList();
+        }
+
+        public static ProjectResponse ToResponse(this ProjectDto entity)
+        {
+            return _mapper.Map<ProjectResponse>(entity);
         }
     }
 }

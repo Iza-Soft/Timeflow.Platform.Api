@@ -9,7 +9,9 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timeflow.Platform.Infrastructure", "Timeflow.Platform.Infrastructure\Timeflow.Platform.Infrastructure.csproj", "{5A6C34C5-EA44-4A51-AF89-10E21EDF73D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeflow.Platform.Middleware", "Timeflow.Platform.Middleware\Timeflow.Platform.Middleware.csproj", "{315B8141-D591-4036-B3AA-6328E9B7B9A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timeflow.Platform.Middleware", "Timeflow.Platform.Middleware\Timeflow.Platform.Middleware.csproj", "{315B8141-D591-4036-B3AA-6328E9B7B9A8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timeflow.Platform.Authentication", "Timeflow.Platform.Authentication\Timeflow.Platform.Authentication.csproj", "{0C59A06D-31C0-486D-AE6B-77B706544D5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{315B8141-D591-4036-B3AA-6328E9B7B9A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{315B8141-D591-4036-B3AA-6328E9B7B9A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{315B8141-D591-4036-B3AA-6328E9B7B9A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C59A06D-31C0-486D-AE6B-77B706544D5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C59A06D-31C0-486D-AE6B-77B706544D5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C59A06D-31C0-486D-AE6B-77B706544D5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C59A06D-31C0-486D-AE6B-77B706544D5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

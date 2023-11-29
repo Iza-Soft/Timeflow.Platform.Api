@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Timeflow.Platform.Middleware.Dto
+﻿namespace Timeflow.Platform.Middleware.Dto
 {
     public class ProjectDto
     {
@@ -19,5 +13,7 @@ namespace Timeflow.Platform.Middleware.Dto
         public DateTime CreatedDate { get; set; }
 
         public Guid CreatedBy { get; set; }
+
+        public IList<TaskDto>? Tasks { get; set; }
     }
 }

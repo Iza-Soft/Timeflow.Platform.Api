@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Timeflow.Platform.Infrastructure.Authentication;
+using Timeflow.Platform.Infrastructure.Patterns.Repository.Class;
+using Timeflow.Platform.Infrastructure.Patterns.Repository.Interface;
 
 namespace Timeflow.Platform.Infrastructure.Extensions.Service
 {
@@ -12,6 +14,7 @@ namespace Timeflow.Platform.Infrastructure.Extensions.Service
     {
         public static IServiceCollection AddDdManagement(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddTransient<DbContext, TimeFlowContext>();
             /*
              * use power shell for migration with commands 
              ********************************************** if have some problem with command "dotnet ef", see link: https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli **********************************************
@@ -33,6 +36,14 @@ namespace Timeflow.Platform.Infrastructure.Extensions.Service
             /*https://www.dotnettricks.com/learn/aspnetcore/authentication-authentication-aspnet-identity-example*/
             services.AddIdentityCore<ApplicationUser>().AddRoles<IdentityRole<Guid>>().AddUserManager<UserManager<ApplicationUser>>().AddEntityFrameworkStores<TimeFlowContext>(); //need to add -> AddTokenProvider<AuthenticatorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
             services.AddDbContext<TimeFlowContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            return services;
+        }
+
+        public static IServiceCollection AddRepositoryPattern(this IServiceCollection services)
+        {
+            services.AddTransient<IProjectRepository, ProjectRepository>();
+            services.AddTransient<ITimesheetRepository, TimesheetRepository>();
 
             return services;
         }

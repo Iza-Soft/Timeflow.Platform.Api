@@ -1,8 +1,8 @@
 ﻿namespace Timeflow.Platform.Api.Boundary.Response
 {
-    public class BaseErrorResponseViewModel
+    public class BaseErrorResponse
     {
-        public BaseErrorResponseViewModel(int statusCode, string message, string? details = null)
+        public BaseErrorResponse(int statusCode, string message, string? details = null)
         {
             StatusCode = statusCode;
             Message = message;

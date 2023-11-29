@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using Timeflow.Platform.Infrastructure.Enum;
+using Timeflow.Platform.Infrastructure.Enums;
 
 namespace Timeflow.Platform.Infrastructure.Specifications.Interface
 {
@@ -11,6 +11,6 @@ namespace Timeflow.Platform.Infrastructure.Specifications.Interface
         int? Offset { get; }
         int? Size { get; }
         Expression<Func<T, object>> SortOn { get; }
-        SortDirection SortDirection { get; }
+        SortDirectionEnum SortDirection { get; }
     }
 }

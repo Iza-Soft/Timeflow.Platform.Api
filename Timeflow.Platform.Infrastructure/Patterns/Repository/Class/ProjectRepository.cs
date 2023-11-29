@@ -12,6 +12,6 @@ namespace Timeflow.Platform.Infrastructure.Patterns.Repository.Class
         {
         }
 
-        public async Task<IList<ProjectEntity>> GetAllProjectAsync(Guid userId) => await ListAsync(new GetProjectByUserId(userId));
+        public async Task<IList<ProjectEntity>> GetAllProjectAsync(Guid userId) => await ListAsync(new GetProjectSpec(userId));
     }
 }

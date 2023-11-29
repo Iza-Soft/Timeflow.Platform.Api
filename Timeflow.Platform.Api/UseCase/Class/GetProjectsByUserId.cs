@@ -7,7 +7,7 @@ using Timeflow.Platform.Api.Boundary.Request.Class;
 
 namespace Timeflow.Platform.Api.UseCase.Class
 {
-    public class GetProjectsByUserId : BaseUseCase<IList<ProjectResponseViewModel>>
+    public class GetProjectsByUserId : BaseUseCase<IList<ProjectResponse>>
     {
         private readonly IProjectProxy _projectProxy;
 
@@ -16,13 +16,13 @@ namespace Timeflow.Platform.Api.UseCase.Class
             this._projectProxy = projectProxy;
         }
 
-        public override async Task<IList<ProjectResponseViewModel>> ExecuteAsync(RequestViewModel? request)
+        public override async Task<IList<ProjectResponse>> ExecuteAsync(RequestViewModel? request)
         {
-            Guid userId = (request as ProjectRequestViewModel)!.UserId;
+            Guid userId = (request as ProjectQuery)!.UserId;
 
             var projects = await this._projectProxy.GetByUserIdAsync(userId);
 
-            return projects.ToResult();
+            return projects.ToResponse();
         }
     }
 }

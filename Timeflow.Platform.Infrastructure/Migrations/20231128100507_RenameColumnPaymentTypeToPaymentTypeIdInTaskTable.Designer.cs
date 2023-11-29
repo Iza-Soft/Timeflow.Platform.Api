@@ -12,8 +12,8 @@ using Timeflow.Platform.Infrastructure;
 namespace Timeflow.Platform.Infrastructure.Migrations
 {
     [DbContext(typeof(TimeFlowContext))]
-    [Migration("20231031121046_CreateDBTableProject")]
-    partial class CreateDBTableProject
+    [Migration("20231128100507_RenameColumnPaymentTypeToPaymentTypeIdInTaskTable")]
+    partial class RenameColumnPaymentTypeToPaymentTypeIdInTaskTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -243,18 +243,151 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 31, 14, 10, 46, 774, DateTimeKind.Local).AddTicks(14));
+                        .HasDefaultValue(new DateTime(2023, 11, 28, 12, 5, 6, 902, DateTimeKind.Local).AddTicks(2761));
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.ToTable("Project", (string)null);
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ServiceTypeEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2023, 11, 28, 12, 5, 6, 902, DateTimeKind.Local).AddTicks(5896));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServiceType", (string)null);
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.TaskEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2023, 11, 28, 12, 5, 6, 902, DateTimeKind.Local).AddTicks(3507));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<decimal>("PaymentAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<byte>("PaymentTypeId")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("ServiceTypeId");
+
+                    b.ToTable("Task", (string)null);
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.TimeSheetEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2023, 11, 28, 12, 5, 6, 902, DateTimeKind.Local).AddTicks(6255));
+
+                    b.Property<int>("DayOfMonth")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MonthOfYear")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("TaskId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("WeekOfYear")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("WorkingHours")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("TimeSheet", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -306,6 +439,51 @@ namespace Timeflow.Platform.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.TaskEntity", b =>
+                {
+                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", "Project")
+                        .WithMany("Tasks")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.ServiceTypeEntity", "ServiceType")
+                        .WithMany("Tasks")
+                        .HasForeignKey("ServiceTypeId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("ServiceType");
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.TimeSheetEntity", b =>
+                {
+                    b.HasOne("Timeflow.Platform.Infrastructure.Entities.TaskEntity", "Task")
+                        .WithMany("Timesheets")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Task");
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ProjectEntity", b =>
+                {
+                    b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.ServiceTypeEntity", b =>
+                {
+                    b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("Timeflow.Platform.Infrastructure.Entities.TaskEntity", b =>
+                {
+                    b.Navigation("Timesheets");
                 });
 #pragma warning restore 612, 618
         }

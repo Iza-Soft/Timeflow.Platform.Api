@@ -1,26 +1,24 @@
-﻿//namespace Timeflow.Platform.Infrastructure.Entities
-//{
-//    public class TimeSheetEntity : BaseEntity<int>
-//    {
-//        public int ProjectId { get; set; }
+﻿namespace Timeflow.Platform.Infrastructure.Entities
+{
+    public class TimeSheetEntity : BaseEntity<int>
+    {
+        public int TaskId { get; set; }
 
-//        public int ContractorId { get; set; }
+        public int DayOfMonth { get; set; }
 
-//        public int DayOfMonth { get; set; }
+        public int WeekOfYear { get; set; }
 
-//        public int MonthOfYear { get; set; }
+        public int MonthOfYear { get; set; }
 
-//        public int Year { get; set; }
+        public int Year { get; set; }
 
-//        public string DayOfWeek { get; set; } = null!;
+        public int? WorkingHours { get; set; }
 
-//        public string Month { get; set; } = null!;
+        public string? Notes { get; set; }
 
-//        public double WorkingHours { get; set; }
+        public Guid UserId { get; set; }
 
-//        public virtual ProjectEntity Project { get; set; } = null!;
+        public virtual TaskEntity Task { get; set; } = null!;
 
-//        public virtual ContractorEntity Contractor { get; set; } = null!;
-
-//    }
-//}
+    }
+}
