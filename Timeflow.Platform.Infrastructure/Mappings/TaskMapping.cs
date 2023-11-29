@@ -14,7 +14,7 @@ namespace Timeflow.Platform.Infrastructure.Mappings
             modelBuilder.Property(x => x.CreatedDate).HasDefaultValue(DateTime.Now);
             modelBuilder.Property(x => x.PaymentAmount).HasPrecision(18, 2);
             modelBuilder.Property(x => x.PaymentTypeId).HasColumnType("tinyint").HasConversion(paymentTypeItem => (byte)paymentTypeItem, paymentTypeItem => (PaymentTypeEnum)Enum.Parse(typeof(PaymentTypeEnum), paymentTypeItem.ToString())).IsRequired();
-            modelBuilder.Property(x => x.ServiceTypeId).HasColumnType("tinyint").HasConversion(serviceTypeItem => (byte)serviceTypeItem, serviceTypeItem => (ServiceTypeEnum)Enum.Parse(typeof(ServiceTypeEnum), serviceTypeItem.ToString())).IsRequired();
+            //modelBuilder.Property(x => x.ServiceTypeId).HasColumnType("tinyint").HasConversion(serviceTypeItem => (byte)serviceTypeItem, serviceTypeItem => (ServiceTypeEnum)Enum.Parse(typeof(ServiceTypeEnum), serviceTypeItem.ToString())).IsRequired();
             modelBuilder.HasOne(x => x.Project).WithMany(y => y.Tasks).HasForeignKey(x => x.ProjectId).OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.ToTable("Task");
         }

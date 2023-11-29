@@ -14,11 +14,11 @@ namespace Timeflow.Platform.Api.Boundary.Response
         [JsonProperty("Title")]
         public string Title { get; set; } = null!;
 
-        [JsonProperty("ServiceTypeId")]
-        public ServiceTypeEnum ServiceTypeId { get; set; }
+        //[JsonProperty("ServiceTypeId")]
+        //public ServiceTypeEnum ServiceTypeId { get; set; }
 
-        [JsonProperty("ServiceType")]
-        public string ServiceType { get; set; } = null!;
+        //[JsonProperty("ServiceType")]
+        //public string ServiceType { get; set; } = null!;
 
         [JsonProperty("Description")]
         public string Description { get; set; } = null!;

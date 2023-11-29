@@ -24,7 +24,7 @@ namespace Timeflow.Platform.Api.Mappings
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.ProjectName, opt => opt.MapFrom(src => src.Task.Project.Title))
                 .ForMember(dest => dest.TaskName, opt => opt.MapFrom(src => src.Task.Title))
-                .ForMember(dest => dest.ServiceType, opt => opt.MapFrom(src => src.Task.ServiceTypeId.ToDescription()))
+                .ForMember(dest => dest.ServiceType, opt => opt.MapFrom(src => src.ServiceTypeId.ToDescription()))
                 .ForMember(dest => dest.WorkingHours, opt => opt.MapFrom(src => src.WorkingHours))
                 .ForMember(dest => dest.PaymentAmount, opt => opt.MapFrom(src => src.Task.PaymentAmount))
                 .ForMember(dest => dest.PaymentType, opt => opt.MapFrom(src => src.Task.PaymentTypeId.ToDescription()))

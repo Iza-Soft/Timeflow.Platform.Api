@@ -1,8 +1,12 @@
-﻿namespace Timeflow.Platform.Infrastructure.Entities
+﻿using Timeflow.Platform.Infrastructure.Enums;
+
+namespace Timeflow.Platform.Infrastructure.Entities
 {
     public class TimeSheetEntity : BaseEntity<int>
     {
         public int TaskId { get; set; }
+
+        public ServiceTypeEnum ServiceTypeId { get; set; }
 
         public int DayOfMonth { get; set; }
 
