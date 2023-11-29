@@ -9,7 +9,7 @@ namespace Timeflow.Platform.Middleware.Dto
 
         public int ProjectId { get; set; }
 
-        public ServiceTypeEnum ServiceTypeId { get; set; }
+        //public ServiceTypeEnum ServiceTypeId { get; set; }
 
         public string Title { get; set; } = null!;
 

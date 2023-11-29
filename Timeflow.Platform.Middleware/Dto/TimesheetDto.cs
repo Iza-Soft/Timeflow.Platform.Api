@@ -1,10 +1,14 @@
-﻿namespace Timeflow.Platform.Middleware.Dto
+﻿using Timeflow.Platform.Infrastructure.Enums;
+
+namespace Timeflow.Platform.Middleware.Dto
 {
     public class TimesheetDto
     {
         public int Id { get; set; }
 
         public int TaskId { get; set; }
+
+        public ServiceTypeEnum ServiceTypeId { get; set; }
 
         public int DayOfMonth { get; set; }
 
